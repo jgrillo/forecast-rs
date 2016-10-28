@@ -229,7 +229,7 @@ pub struct Flag {
 pub struct Response<T: TimeZone> where DateTime<T>: Serialize + Deserialize {
     pub latitude: f64,
     pub longitude: f64,
-    pub timezone: T,
+    pub timezone: String,
     pub offset: String,
     pub currently: DataPoint<T>,
     pub minutely: DataBlock<T>,

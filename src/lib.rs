@@ -18,7 +18,7 @@ include!(concat!(env!("OUT_DIR"), "/serde_types.rs"));
 
 use std::vec::Vec;
 use std::option::Option;
-use chrono::{DateTime, TimeZone};
+use chrono::{DateTime, TimeZone, FixedOffset};
 
 // request model objects and their builders
 
@@ -169,6 +169,8 @@ impl<'a> TimeMachineRequestBuilder<'a> {
     }
 }
 
+// api objects
+
 fn get_forecast<T: TimeZone>(
     request: ForecastRequest
 ) -> Option<Response<T>> where DateTime<T>: Serialize + Deserialize {
@@ -182,13 +184,6 @@ mod tests {
                 DataPoint, DataBlock, Alert, Flag, Response};
 
     use std::vec::Vec;
-
-    // tests for serde models
-
-    #[test]
-    fn test_response_serde() {
-
-    }
 
     // tests for request models and their builders
 
