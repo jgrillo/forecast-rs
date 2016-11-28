@@ -1,0 +1,20 @@
+[package]
+name = "forecast"
+version = "0.0.1"
+authors = ["Jesse C. Grillo <jesse.grillo@gmail.com>"]
+build = "build.rs"
+
+[features]
+default = ["serde_codegen"]
+unstable = ["serde_derive"]
+integration = []
+
+[build-dependencies]
+serde_codegen = { version = "0.8.10", optional = true }
+
+[dependencies]
+serde = "0.8.9"
+serde_derive = { version = "0.8.9", optional = true }
+serde_json = "0.8.2"
+hyper = "0.9.12"
+itertools = "0.5.4"
