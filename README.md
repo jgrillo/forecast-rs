@@ -1,6 +1,7 @@
 # forecast-rs
 
 [![Powered By Dark Sky](https://darksky.net/dev/img/attribution/poweredby-oneline.png)](https://darksky.net/poweredby/)
+[![Build Status](https://travis-ci.org/jgrillo/forecast-rs.svg?branch=master)](https://travis-ci.org/jgrillo/forecast-rs)
 
 Forecast-rs is a [Rust](https://www.rust-lang.org) client library for the [Dark
 Sky API](https://darksky.net/dev/). A crate is available from
