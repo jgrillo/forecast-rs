@@ -1,6 +1,8 @@
 //! This module exposes an SDK for interacting with the [Dark Sky
 //! API](https://darksky.net/dev/docs/).
 
+#![doc(html_root_url = "https://jgrillo.github.io/forecast-rs/")]
+
 #![cfg_attr(feature = "serde_derive", feature(rustc_macro))]
 
 #[cfg(feature = "serde_derive")]
