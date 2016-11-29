@@ -1,5 +1,11 @@
 [package]
-name = "forecast"
+name = "forecast-rs"
+description = "A Rust client for the Dark Sky API."
+readme = "README.md"
+license = "Apache-2.0"
+documentation = "https://jgrillo.github.io/forecast-rs/"
+repository = "https://github.com/jgrillo/forecast-rs"
+keywords = ["forecast.io", "forecast", "Dark Sky API", "weather", "darksky.net"]
 version = "0.0.1"
 authors = ["Jesse C. Grillo <jesse.grillo@gmail.com>"]
 build = "build.rs"
