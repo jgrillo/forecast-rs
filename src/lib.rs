@@ -39,7 +39,7 @@ static EXTEND: &'static str = "extend";
 static LANG: &'static str = "lang";
 static UNITS: &'static str = "units";
 
-// api objects and their builders
+// api objects
 
 /// The ApiClient is a thin wrapper around a `hyper::Client` which sends
 /// requests to the Forecast and Time Machine APIs.
