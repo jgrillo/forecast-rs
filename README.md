@@ -2,10 +2,11 @@
 
 [![Powered By Dark Sky](https://darksky.net/dev/img/attribution/poweredby-oneline.png)](https://darksky.net/poweredby/)
 [![Build Status](https://travis-ci.org/jgrillo/forecast-rs.svg?branch=master)](https://travis-ci.org/jgrillo/forecast-rs)
+[![Crate](https://img.shields.io/crates/v/forecast-rs.svg)](https://crates.io/crates/forecast-rs)
 
 Forecast-rs is a [Rust](https://www.rust-lang.org) client library for the [Dark
 Sky API](https://darksky.net/dev/). A crate is available from
-[crates.io](https://crates.io) This project is tested against Rust stable, beta,
+[crates.io](https://crates.io). This project is tested against Rust stable, beta,
 and nightly.
 
 ## Disclaimer: everything is alpha
