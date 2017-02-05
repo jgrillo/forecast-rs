@@ -1,4 +1,4 @@
-/*Copyright 2016 Jesse C. Grillo
+/*Copyright 2016-2017 Jesse C. Grillo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -12,12 +12,77 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-//! This module exposes an SDK for interacting with the [Dark Sky
-//! API](https://darksky.net/dev/docs/).
-
 #![doc(html_root_url = "https://jgrillo.github.io/forecast-rs/")]
 
 #![cfg_attr(feature = "serde_derive", feature(rustc_macro))]
+
+//! This module exposes an SDK for interacting with the [Dark Sky
+//! API](https://darksky.net/dev/docs/).
+//!
+//! # Overview
+//!
+//! The `ApiClient` is the main entrypoint. It exposes two methods for sending
+//! HTTP requests to the Dark Sky API:
+//!
+//!   1. `ApiClient::get_forecast(request: ForecastRequest)` makes an HTTP
+//!      request against the API and returns a deserialized response containing
+//!      a weather forecast given the current weather conditions.
+//!
+//!   2. `ApiClient::get_time_machine(request: TimeMachineRequest)` makes a
+//!      request against the API and returns a deserialized response containing
+//!      weather data corresponding to the `time` parameter in the
+//!      `TimeMachineRequest`.
+//!
+//! For your convenience, there are two builder objects `ForecastRequestBuilder`
+//! and `TimeMachineRequestBuilder` which you can use to construct
+//! `ForecastRequest` and `TimeMachineRequest` instances.
+//!
+//! # Examples
+//!
+//! The following example builds a `ForecastRequest` and a `TimeMachineRequest` 
+//! and executes them against the API:
+//!
+//! ```
+//! extern crate hyper;
+//! extern crate forecast;
+//!
+//! use hyper::Client;
+//!
+//! use forecast::{ApiResponse, ApiClient, ForecastRequestBuilder,
+//!                TimeMachineRequestBuilder, ExcludeBlock, ExtendBy, 
+//!                Lang, Units};
+//!
+//! const LAT: f64 = 6.66;
+//! const LONG: f64 = 66.6;
+//! const TIME: u64 = 666;
+//!
+//! fn main() {
+//!     let api_key = "my_dark_sky_api_key"; // please don't actually hardcode your API key!
+//!
+//!     let hyper_client = Client::default();
+//!     let api_client = ApiClient::new(&hyper_client);
+//!
+//!     let mut blocks = vec![ExcludeBlock::Daily, ExcludeBlock::Alerts];
+//!
+//!     let forecast_request = ForecastRequestBuilder::new(api_key, LAT, LONG)
+//!         .exclude_block(ExcludeBlock::Hourly)
+//!         .exclude_blocks(&mut blocks)
+//!         .extend(ExtendBy::Hourly)
+//!         .lang(Lang::Arabic)
+//!         .units(Units::Imperial)
+//!         .build();
+//!
+//!     let time_machine_request = TimeMachineRequestBuilder::new(api_key, LAT, LONG, TIME)
+//!         .exclude_block(ExcludeBlock::Hourly)
+//!         .exclude_blocks(&mut blocks)
+//!         .lang(Lang::Arabic)
+//!         .units(Units::Imperial)
+//!         .build();
+//!
+//!     // let forecast_response = api_client.get_forecast(forecast_request).unwrap();
+//!     // let time_machine_response = api_client.get_time_machine(time_machine_request).unwrap();
+//! }
+//! ```
 
 #[cfg(feature = "serde_derive")]
 #[macro_use]
