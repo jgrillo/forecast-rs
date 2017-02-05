@@ -9,6 +9,7 @@
 
     <title>forecast::ApiClient - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -47,10 +48,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-2082' class='srclink' href='../src/forecast/src/lib.rs.html#47-49' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/forecast/lib.rs.html#126-128' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ApiClient&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>The ApiClient is a thin wrapper around a <code>hyper::Client</code> which sends
 requests to the Forecast and Time Machine APIs.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../forecast/struct.ApiClient.html' title='forecast::ApiClient'>ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2092' class='srclink' href='../src/forecast/src/lib.rs.html#51-80' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../forecast/struct.ApiClient.html' title='forecast::ApiClient'>ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#130-159' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(client: &amp;'a <a class='struct' href='https://hyperium.github.io/hyper/hyper/client/struct.Client.html' title='hyper::client::Client'>Client</a>) -&gt; <a class='struct' href='../forecast/struct.ApiClient.html' title='forecast::ApiClient'>ApiClient</a>&lt;'a&gt;</code></span></h4>
 <div class='docblock'><p>Construct a new ApiClient.</p>
 </div><h4 id='method.get_forecast' class='method'><span id='get_forecast.v' class='invisible'><code>fn <a href='#method.get_forecast' class='fnname'>get_forecast</a>(self, request: <a class='struct' href='../forecast/struct.ForecastRequest.html' title='forecast::ForecastRequest'>ForecastRequest</a>) -&gt; <a class='type' href='https://hyperium.github.io/hyper/hyper/error/type.Result.html' title='hyper::error::Result'>ApiResult</a>&lt;<a class='struct' href='https://hyperium.github.io/hyper/hyper/client/response/struct.Response.html' title='hyper::client::response::Response'>Response</a>&gt;</code></span></h4>
@@ -67,7 +68,7 @@ request, returns the corresponding Response.</p>
 <h1 id='errors-1' class='section-header'><a href='#errors-1'>Errors</a></h1>
 <p>This function is a thin wrapper around <code>hyper::Client.get(..)</code>, so it
 will return an error under the same conditions in which hyper would.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../forecast/struct.ApiClient.html' title='forecast::ApiClient'>ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2085' class='srclink' href='../src/forecast/src/lib.rs.html#46' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../forecast/struct.ApiClient.html' title='forecast::ApiClient'>ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#125' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div></section>
@@ -126,11 +127,9 @@ will return an error under the same conditions in which hyper would.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "forecast";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>
