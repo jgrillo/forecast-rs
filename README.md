@@ -7,12 +7,19 @@
 Forecast-rs is a [Rust](https://www.rust-lang.org) client library for the [Dark
 Sky API](https://darksky.net/dev/). A crate is available from
 [crates.io](https://crates.io). This project is tested against Rust stable, beta,
-and nightly.
+and nightly (although Travis is configured to ignore failures on nightly).
 
 ## Disclaimer: everything is alpha
 
 Until this project reaches 1.0.0, everything is subject to change. We will do
 our best to conform to [semver 2.0.0](http://semver.org).
+
+## Contributing
+
+Contributions are welcome! This is the first thing I have ever attempted to
+write in Rust, so it probably isn't all it could be. If you encounter a problem
+using it or see something gross feel free to submit a pull request or open an
+issue.
 
 ## License
 

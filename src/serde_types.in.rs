@@ -1,4 +1,4 @@
-/*Copyright 2016 Jesse C. Grillo
+/*Copyright 2016-2017 Jesse C. Grillo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -212,7 +212,7 @@ pub enum Units {
     SI
 }
 
-/// Model object containing various properties, each represenging the average
+/// Model object containing various properties, each representing the average
 /// (unless otherwise specified) of a particular weather phenomenon ocurring
 /// during a period of time.
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
