@@ -15,7 +15,7 @@ limitations under the License.*/
 extern crate serde;
 extern crate serde_json;
 
-extern crate hyper;
+extern crate reqwest;
 
 extern crate forecast;
 
@@ -23,10 +23,10 @@ use std::error::Error;
 use std::fs::File;
 use std::path::PathBuf;
 
-use hyper::Client;
+use reqwest::{Client, StatusCode};
 
 use forecast::{ApiResponse, ApiClient, ForecastRequestBuilder,
-               TimeMachineRequestBuilder, ExcludeBlock, ExtendBy, 
+               TimeMachineRequestBuilder, ExcludeBlock, ExtendBy,
                Lang, Units};
 
 // constants
@@ -58,8 +58,10 @@ fn test_response_serde() {
     assert_eq!(deserialized_response, deserialized_again);
 }
 
-// tests which perform network calls
-// To execute these tests, run the following command in the project root:
+// tests which perform network calls.
+//
+// To execute these tests, run the following command in the project
+// root:
 //
 // FORECAST_API_KEY=$YOUR_FORECAST_API_KEY cargo test --features integration
 
@@ -68,14 +70,15 @@ fn test_response_serde() {
 fn test_get_forecast_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let hyper_client = Client::default();
-    let api_client = ApiClient::new(&hyper_client);
+    let reqwest_client = Client::new().unwrap();
+    let api_client = ApiClient::new(&reqwest_client);
 
     let forecast_request = ForecastRequestBuilder::new(api_key, LAT, LONG).build();
 
     let response = api_client.get_forecast(forecast_request).unwrap();
+    let status = response.status();
 
-    assert_eq!(response.status, hyper::Ok);
+    assert_eq!(*status, StatusCode::Ok);
 }
 
 #[test]
@@ -83,8 +86,8 @@ fn test_get_forecast_request_default() {
 fn test_get_forecast_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let hyper_client = Client::default();
-    let api_client = ApiClient::new(&hyper_client);
+    let reqwest_client = Client::new().unwrap();
+    let api_client = ApiClient::new(&reqwest_client);
 
     let mut blocks = vec![ExcludeBlock::Daily, ExcludeBlock::Alerts];
 
@@ -97,8 +100,9 @@ fn test_get_forecast_request_full() {
         .build();
 
     let response = api_client.get_forecast(forecast_request).unwrap();
+    let status = response.status();
 
-    assert_eq!(response.status, hyper::Ok);
+    assert_eq!(*status, StatusCode::Ok);
 }
 
 #[test]
@@ -106,15 +110,17 @@ fn test_get_forecast_request_full() {
 fn test_get_time_machine_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let hyper_client = Client::default();
-    let api_client = ApiClient::new(&hyper_client);
+    let reqwest_client = Client::new().unwrap();
+    let api_client = ApiClient::new(&reqwest_client);
 
-    let time_machine_request = TimeMachineRequestBuilder::new(api_key, LAT, LONG, TIME)
-        .build();
+    let time_machine_request = TimeMachineRequestBuilder::new(
+        api_key, LAT, LONG, TIME
+    ).build();
 
     let response = api_client.get_time_machine(time_machine_request).unwrap();
+    let status = response.status();
 
-    assert_eq!(response.status, hyper::Ok);
+    assert_eq!(*status, StatusCode::Ok);
 }
 
 #[test]
@@ -122,12 +128,14 @@ fn test_get_time_machine_request_default() {
 fn test_get_time_machine_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let hyper_client = Client::default();
-    let api_client = ApiClient::new(&hyper_client);
+    let reqwest_client = Client::new().unwrap();
+    let api_client = ApiClient::new(&reqwest_client);
 
     let mut blocks = vec![ExcludeBlock::Daily, ExcludeBlock::Alerts];
 
-    let time_machine_request = TimeMachineRequestBuilder::new(api_key, LAT, LONG, TIME)
+    let time_machine_request = TimeMachineRequestBuilder::new(
+        api_key, LAT, LONG, TIME
+    )
         .exclude_block(ExcludeBlock::Hourly)
         .exclude_blocks(&mut blocks)
         .lang(Lang::Arabic)
@@ -135,6 +143,7 @@ fn test_get_time_machine_request_full() {
         .build();
 
     let response = api_client.get_time_machine(time_machine_request).unwrap();
+    let status = response.status();
 
-    assert_eq!(response.status, hyper::Ok);
+    assert_eq!(*status, StatusCode::Ok);
 }
