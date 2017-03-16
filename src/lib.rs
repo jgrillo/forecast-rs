@@ -21,26 +21,28 @@ limitations under the License.*/
 //!
 //! # Overview
 //!
-//! The `ApiClient` is the main entrypoint. It exposes two methods for sending
-//! HTTP requests to the Dark Sky API:
+//! The `ApiClient` is the main entrypoint. It exposes two methods for
+//! sending HTTP requests to the Dark Sky API:
 //!
-//!   1. `ApiClient::get_forecast(request: ForecastRequest)` makes an HTTP
-//!      request against the API and returns a deserialized response containing
-//!      a weather forecast given the current weather conditions.
+//!   1. `ApiClient::get_forecast(request: ForecastRequest)` makes an
+//!   HTTP request against the API and returns a deserialized response
+//!   containing a weather forecast given the current weather
+//!   conditions.
 //!
-//!   2. `ApiClient::get_time_machine(request: TimeMachineRequest)` makes a
-//!      request against the API and returns a deserialized response containing
-//!      weather data corresponding to the `time` parameter in the
-//!      `TimeMachineRequest`.
+//!   2. `ApiClient::get_time_machine(request: TimeMachineRequest)`
+//!   makes a request against the API and returns a deserialized
+//!   response containing weather data corresponding to the `time`
+//!   parameter in the `TimeMachineRequest`.
 //!
-//! For your convenience, there are two builder objects `ForecastRequestBuilder`
-//! and `TimeMachineRequestBuilder` which you can use to construct
-//! `ForecastRequest` and `TimeMachineRequest` instances.
+//! For your convenience, there are two builder objects
+//! `ForecastRequestBuilder` and `TimeMachineRequestBuilder` which you
+//! can use to construct `ForecastRequest` and `TimeMachineRequest`
+//! instances.
 //!
 //! # Examples
 //!
-//! The following example builds a `ForecastRequest` and a `TimeMachineRequest` 
-//! and executes them against the API:
+//! The following example builds a `ForecastRequest` and a
+//! `TimeMachineRequest` and executes them against the API:
 //!
 //! ```
 //! extern crate hyper;
@@ -49,7 +51,7 @@ limitations under the License.*/
 //! use hyper::Client;
 //!
 //! use forecast::{ApiResponse, ApiClient, ForecastRequestBuilder,
-//!                TimeMachineRequestBuilder, ExcludeBlock, ExtendBy, 
+//!                TimeMachineRequestBuilder, ExcludeBlock, ExtendBy,
 //!                Lang, Units};
 //!
 //! const LAT: f64 = 6.66;
@@ -120,8 +122,8 @@ static UNITS: &'static str = "units";
 
 // api objects
 
-/// The ApiClient is a thin wrapper around a `hyper::Client` which sends
-/// requests to the Forecast and Time Machine APIs.
+/// The ApiClient is a thin wrapper around a `hyper::Client` which
+/// sends requests to the Forecast and Time Machine APIs.
 #[derive(Debug)]
 pub struct ApiClient<'a> {
     client: &'a Client
@@ -135,24 +137,27 @@ impl<'a> ApiClient<'a> {
         }
     }
 
-    /// Send a [Forecast API](https://darksky.net/dev/docs/forecast) request,
-    /// returns the corresponding Response.
-    ///
-    /// # Errors
-    ///
-    /// This function is a thin wrapper around `hyper::Client.get(..)`, so it
-    /// will return an error under the same conditions in which hyper would.
-    pub fn get_forecast(self, request: ForecastRequest) -> ApiResult<Response> {
-        self.client.get(request).send()
-    }
-
-    /// Send a [Time Machine API](https://darksky.net/dev/docs/time-machine)
+    /// Send a [Forecast API](https://darksky.net/dev/docs/forecast)
     /// request, returns the corresponding Response.
     ///
     /// # Errors
     ///
-    /// This function is a thin wrapper around `hyper::Client.get(..)`, so it
-    /// will return an error under the same conditions in which hyper would.
+    /// This function is a thin wrapper around
+    /// `hyper::Client.get(..)`, so it will return an error under the
+    /// same conditions in which hyper would.
+    pub fn get_forecast(self, request: ForecastRequest) -> ApiResult<Response> {
+        self.client.get(request).send()
+    }
+
+    /// Send a [Time Machine
+    /// API](https://darksky.net/dev/docs/time-machine) request,
+    /// returns the corresponding Response.
+    ///
+    /// # Errors
+    ///
+    /// This function is a thin wrapper around
+    /// `hyper::Client.get(..)`, so it will return an error under the
+    /// same conditions in which hyper would.
     pub fn get_time_machine(self, request: TimeMachineRequest) -> ApiResult<Response> {
         self.client.get(request).send()
     }
@@ -201,7 +206,7 @@ impl<'a> IntoUrl for ForecastRequest<'a> {
     fn into_url(self) -> Result<Url, ParseError> {
         Result::Ok(self.url)
     }
-} 
+}
 
 /// Builder object used to construct a ForecastRequest.
 #[derive(PartialEq, Debug)]
@@ -217,8 +222,8 @@ pub struct ForecastRequestBuilder<'a> {
 
 impl<'a> ForecastRequestBuilder<'a> {
 
-    /// A Forecast API request is constructed with required params `api_key`,
-    /// `latitude`, and `longitude`.
+    /// A Forecast API request is constructed with required params
+    /// `api_key`, `latitude`, and `longitude`.
     pub fn new(api_key: &'a str, latitude: f64, longitude: f64) -> ForecastRequestBuilder {
         ForecastRequestBuilder {
             api_key: api_key,
@@ -245,7 +250,8 @@ impl<'a> ForecastRequestBuilder<'a> {
         self
     }
 
-    /// Extend the time window of the response data from 48 hours to 168 hours.
+    /// Extend the time window of the response data from 48 hours to
+    /// 168 hours.
     pub fn extend(mut self, extend: ExtendBy) -> ForecastRequestBuilder<'a> {
         self.extend = Some(extend);
         self
@@ -279,13 +285,13 @@ impl<'a> ForecastRequestBuilder<'a> {
 
     fn build_url(&self) -> Url {
         let url_string = format!(
-            "{base}/{key}/{lat:.16},{long:.16}", 
+            "{base}/{key}/{lat:.16},{long:.16}",
             base=FORECAST_URL,
             key=&self.api_key,
             lat=&self.latitude,
             long=&self.longitude
         );
-        
+
         let mut url = Url::parse(&url_string).unwrap();
 
         {
@@ -308,21 +314,21 @@ impl<'a> ForecastRequestBuilder<'a> {
 
             if let &Some(ref extend) = &self.extend {
                 query_pairs.append_pair(
-                    EXTEND, 
+                    EXTEND,
                     serde_json::to_string(&extend).unwrap().trim_matches('"')
                 );
             }
 
             if let &Some(ref lang) = &self.lang {
                 query_pairs.append_pair(
-                    LANG, 
+                    LANG,
                     serde_json::to_string(&lang).unwrap().trim_matches('"')
                 );
             }
 
             if let &Some(ref units) = &self.units {
                 query_pairs.append_pair(
-                    UNITS, 
+                    UNITS,
                     serde_json::to_string(&units).unwrap().trim_matches('"')
                 );
             }
@@ -447,7 +453,7 @@ impl<'a> TimeMachineRequestBuilder<'a> {
 
     fn build_url(&self) -> Url {
         let url_string = format!(
-           "{base}/{key}/{lat:.16},{long:.16},{time}", 
+           "{base}/{key}/{lat:.16},{long:.16},{time}",
             base=FORECAST_URL,
             key=self.api_key,
             lat=self.latitude,
@@ -477,14 +483,14 @@ impl<'a> TimeMachineRequestBuilder<'a> {
 
             if let &Some(ref lang) = &self.lang {
                 query_pairs.append_pair(
-                    LANG, 
+                    LANG,
                     serde_json::to_string(&lang).unwrap().trim_matches('"')
                 );
             }
 
             if let &Some(ref units) = &self.units {
                 query_pairs.append_pair(
-                    UNITS, 
+                    UNITS,
                     serde_json::to_string(&units).unwrap().trim_matches('"')
                 );
             }
@@ -498,7 +504,7 @@ impl<'a> TimeMachineRequestBuilder<'a> {
 
 #[cfg(test)]
 mod tests {
-    use super::{ForecastRequestBuilder, ForecastRequest, TimeMachineRequestBuilder, 
+    use super::{ForecastRequestBuilder, ForecastRequest, TimeMachineRequestBuilder,
                 TimeMachineRequest, ExcludeBlock, Units, Lang, ExtendBy, FORECAST_URL,
                 EXCLUDE, EXTEND, LANG, UNITS};
 
