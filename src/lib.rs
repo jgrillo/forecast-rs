@@ -112,7 +112,7 @@ static UNITS: &'static str = "units";
 
 // api objects
 
-/// The ApiClient is a thin wrapper around a `hyper::Client` which
+/// The ApiClient is a thin wrapper around a `reqwest::Client` which
 /// sends requests to the Forecast and Time Machine APIs.
 #[derive(Debug)]
 pub struct ApiClient<'a> {
@@ -133,8 +133,8 @@ impl<'a> ApiClient<'a> {
     /// # Errors
     ///
     /// This function is a thin wrapper around
-    /// `hyper::Client.get(..)`, so it will return an error under the
-    /// same conditions in which hyper would.
+    /// `reqwest::Client.get(..)`, so it will return an error under the
+    /// same conditions in which reqwest would.
     pub fn get_forecast(self, request: ForecastRequest) -> ApiResult<Response> {
         self.client.get(request).send()
     }
@@ -146,8 +146,8 @@ impl<'a> ApiClient<'a> {
     /// # Errors
     ///
     /// This function is a thin wrapper around
-    /// `hyper::Client.get(..)`, so it will return an error under the
-    /// same conditions in which hyper would.
+    /// `reqwest::Client.get(..)`, so it will return an error under the
+    /// same conditions in which reqwest would.
     pub fn get_time_machine(self, request: TimeMachineRequest) -> ApiResult<Response> {
         self.client.get(request).send()
     }
