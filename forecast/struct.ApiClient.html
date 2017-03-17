@@ -44,32 +44,35 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>forecast</a>::<wbr><a class='struct' href=''>ApiClient</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>forecast</a>::<wbr><a class="struct" href=''>ApiClient</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/forecast/lib.rs.html#126-128' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct ApiClient&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>The ApiClient is a thin wrapper around a <code>hyper::Client</code> which sends
-requests to the Forecast and Time Machine APIs.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../forecast/struct.ApiClient.html' title='forecast::ApiClient'>ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#130-159' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(client: &amp;'a <a class='struct' href='https://hyperium.github.io/hyper/hyper/client/struct.Client.html' title='hyper::client::Client'>Client</a>) -&gt; <a class='struct' href='../forecast/struct.ApiClient.html' title='forecast::ApiClient'>ApiClient</a>&lt;'a&gt;</code></span></h4>
+               </span><a class='srclink' href='../src/forecast/lib.rs.html#118-120' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct ApiClient&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>The ApiClient is a thin wrapper around a <code>reqwest::Client</code> which
+sends requests to the Forecast and Time Machine APIs.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#122-154' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(client: &amp;'a Client) -&gt; <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code></span></h4>
 <div class='docblock'><p>Construct a new ApiClient.</p>
-</div><h4 id='method.get_forecast' class='method'><span id='get_forecast.v' class='invisible'><code>fn <a href='#method.get_forecast' class='fnname'>get_forecast</a>(self, request: <a class='struct' href='../forecast/struct.ForecastRequest.html' title='forecast::ForecastRequest'>ForecastRequest</a>) -&gt; <a class='type' href='https://hyperium.github.io/hyper/hyper/error/type.Result.html' title='hyper::error::Result'>ApiResult</a>&lt;<a class='struct' href='https://hyperium.github.io/hyper/hyper/client/response/struct.Response.html' title='hyper::client::response::Response'>Response</a>&gt;</code></span></h4>
-<div class='docblock'><p>Send a <a href="https://darksky.net/dev/docs/forecast">Forecast API</a> request,
-returns the corresponding Response.</p>
-
-<h1 id='errors' class='section-header'><a href='#errors'>Errors</a></h1>
-<p>This function is a thin wrapper around <code>hyper::Client.get(..)</code>, so it
-will return an error under the same conditions in which hyper would.</p>
-</div><h4 id='method.get_time_machine' class='method'><span id='get_time_machine.v' class='invisible'><code>fn <a href='#method.get_time_machine' class='fnname'>get_time_machine</a>(self, request: <a class='struct' href='../forecast/struct.TimeMachineRequest.html' title='forecast::TimeMachineRequest'>TimeMachineRequest</a>) -&gt; <a class='type' href='https://hyperium.github.io/hyper/hyper/error/type.Result.html' title='hyper::error::Result'>ApiResult</a>&lt;<a class='struct' href='https://hyperium.github.io/hyper/hyper/client/response/struct.Response.html' title='hyper::client::response::Response'>Response</a>&gt;</code></span></h4>
-<div class='docblock'><p>Send a <a href="https://darksky.net/dev/docs/time-machine">Time Machine API</a>
+</div><h4 id='method.get_forecast' class="method"><span id='get_forecast.v' class='invisible'><code>fn <a href='#method.get_forecast' class='fnname'>get_forecast</a>(self, request: <a class="struct" href="../forecast/struct.ForecastRequest.html" title="struct forecast::ForecastRequest">ForecastRequest</a>) -&gt; ApiResult&lt;Response&gt;</code></span></h4>
+<div class='docblock'><p>Send a <a href="https://darksky.net/dev/docs/forecast">Forecast API</a>
 request, returns the corresponding Response.</p>
 
+<h1 id='errors' class='section-header'><a href='#errors'>Errors</a></h1>
+<p>This function is a thin wrapper around
+<code>reqwest::Client.get(..)</code>, so it will return an error under the
+same conditions in which reqwest would.</p>
+</div><h4 id='method.get_time_machine' class="method"><span id='get_time_machine.v' class='invisible'><code>fn <a href='#method.get_time_machine' class='fnname'>get_time_machine</a>(self, request: <a class="struct" href="../forecast/struct.TimeMachineRequest.html" title="struct forecast::TimeMachineRequest">TimeMachineRequest</a>) -&gt; ApiResult&lt;Response&gt;</code></span></h4>
+<div class='docblock'><p>Send a <a href="https://darksky.net/dev/docs/time-machine">Time Machine
+API</a> request,
+returns the corresponding Response.</p>
+
 <h1 id='errors-1' class='section-header'><a href='#errors-1'>Errors</a></h1>
-<p>This function is a thin wrapper around <code>hyper::Client.get(..)</code>, so it
-will return an error under the same conditions in which hyper would.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../forecast/struct.ApiClient.html' title='forecast::ApiClient'>ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#125' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<p>This function is a thin wrapper around
+<code>reqwest::Client.get(..)</code>, so it will return an error under the
+same conditions in which reqwest would.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#117' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

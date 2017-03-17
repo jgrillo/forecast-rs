@@ -44,61 +44,61 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>forecast</a>::<wbr><a class='struct' href=''>ApiResponse</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>forecast</a>::<wbr><a class="struct" href=''>ApiResponse</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/forecast/home/jgrillo/src/forecast-rs/target/debug/build/forecast-66d76ba29ae329fe/out/serde_types.rs.html#3461-3472' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/forecast/lib.rs.html#830-850' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ApiResponse {
-    pub latitude: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
-    pub longitude: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>,
-    pub timezone: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
-    pub offset: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;,
-    pub currently: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.DataPoint.html' title='forecast::DataPoint'>DataPoint</a>&gt;,
-    pub minutely: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.DataBlock.html' title='forecast::DataBlock'>DataBlock</a>&gt;,
-    pub hourly: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.DataBlock.html' title='forecast::DataBlock'>DataBlock</a>&gt;,
-    pub daily: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.DataBlock.html' title='forecast::DataBlock'>DataBlock</a>&gt;,
-    pub alerts: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../forecast/struct.Alert.html' title='forecast::Alert'>Alert</a>&gt;&gt;,
-    pub flags: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.Flags.html' title='forecast::Flags'>Flags</a>&gt;,
+    pub latitude: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+    pub longitude: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+    pub timezone: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+    pub offset: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;,
+    pub currently: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.DataPoint.html" title="struct forecast::DataPoint">DataPoint</a>&gt;,
+    pub minutely: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.DataBlock.html" title="struct forecast::DataBlock">DataBlock</a>&gt;,
+    pub hourly: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.DataBlock.html" title="struct forecast::DataBlock">DataBlock</a>&gt;,
+    pub daily: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.DataBlock.html" title="struct forecast::DataBlock">DataBlock</a>&gt;,
+    pub alerts: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../forecast/struct.Alert.html" title="struct forecast::Alert">Alert</a>&gt;&gt;,
+    pub flags: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.Flags.html" title="struct forecast::Flags">Flags</a>&gt;,
 }</pre><div class='docblock'><p>Model object representing a Forecast or Time Machine API response.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.latitude' class='structfield'>
+</div><h2 class='fields'>Fields</h2><span id='structfield.latitude' class="structfield">
                            <span id='latitude.v' class='invisible'>
-                           <code>latitude: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a></code>
-                           </span></span><span class='stab '></span><span id='structfield.longitude' class='structfield'>
+                           <code>latitude: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a></code>
+                           </span></span><span id='structfield.longitude' class="structfield">
                            <span id='longitude.v' class='invisible'>
-                           <code>longitude: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a></code>
-                           </span></span><span class='stab '></span><span id='structfield.timezone' class='structfield'>
+                           <code>longitude: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a></code>
+                           </span></span><span id='structfield.timezone' class="structfield">
                            <span id='timezone.v' class='invisible'>
-                           <code>timezone: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code>
-                           </span></span><span class='stab '></span><span id='structfield.offset' class='structfield'>
+                           <code>timezone: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code>
+                           </span></span><span id='structfield.offset' class="structfield">
                            <span id='offset.v' class='invisible'>
-                           <code>offset: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;</code>
-                           </span></span><span class='stab '></span><span id='structfield.currently' class='structfield'>
+                           <code>offset: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;</code>
+                           </span></span><span id='structfield.currently' class="structfield">
                            <span id='currently.v' class='invisible'>
-                           <code>currently: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.DataPoint.html' title='forecast::DataPoint'>DataPoint</a>&gt;</code>
-                           </span></span><span class='stab '></span><span id='structfield.minutely' class='structfield'>
+                           <code>currently: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.DataPoint.html" title="struct forecast::DataPoint">DataPoint</a>&gt;</code>
+                           </span></span><span id='structfield.minutely' class="structfield">
                            <span id='minutely.v' class='invisible'>
-                           <code>minutely: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.DataBlock.html' title='forecast::DataBlock'>DataBlock</a>&gt;</code>
-                           </span></span><span class='stab '></span><span id='structfield.hourly' class='structfield'>
+                           <code>minutely: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.DataBlock.html" title="struct forecast::DataBlock">DataBlock</a>&gt;</code>
+                           </span></span><span id='structfield.hourly' class="structfield">
                            <span id='hourly.v' class='invisible'>
-                           <code>hourly: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.DataBlock.html' title='forecast::DataBlock'>DataBlock</a>&gt;</code>
-                           </span></span><span class='stab '></span><span id='structfield.daily' class='structfield'>
+                           <code>hourly: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.DataBlock.html" title="struct forecast::DataBlock">DataBlock</a>&gt;</code>
+                           </span></span><span id='structfield.daily' class="structfield">
                            <span id='daily.v' class='invisible'>
-                           <code>daily: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.DataBlock.html' title='forecast::DataBlock'>DataBlock</a>&gt;</code>
-                           </span></span><span class='stab '></span><span id='structfield.alerts' class='structfield'>
+                           <code>daily: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.DataBlock.html" title="struct forecast::DataBlock">DataBlock</a>&gt;</code>
+                           </span></span><span id='structfield.alerts' class="structfield">
                            <span id='alerts.v' class='invisible'>
-                           <code>alerts: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../forecast/struct.Alert.html' title='forecast::Alert'>Alert</a>&gt;&gt;</code>
-                           </span></span><span class='stab '></span><span id='structfield.flags' class='structfield'>
+                           <code>alerts: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../forecast/struct.Alert.html" title="struct forecast::Alert">Alert</a>&gt;&gt;</code>
+                           </span></span><span id='structfield.flags' class="structfield">
                            <span id='flags.v' class='invisible'>
-                           <code>flags: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../forecast/struct.Flags.html' title='forecast::Flags'>Flags</a>&gt;</code>
-                           </span></span><span class='stab '></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../forecast/struct.ApiResponse.html' title='forecast::ApiResponse'>ApiResponse</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/home/jgrillo/src/forecast-rs/target/debug/build/forecast-66d76ba29ae329fe/out/serde_types.rs.html#3460' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../forecast/struct.ApiResponse.html' title='forecast::ApiResponse'>ApiResponse</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/home/jgrillo/src/forecast-rs/target/debug/build/forecast-66d76ba29ae329fe/out/serde_types.rs.html#3460' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../forecast/struct.ApiResponse.html' title='forecast::ApiResponse'>ApiResponse</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+                           <code>flags: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../forecast/struct.Flags.html" title="struct forecast::Flags">Flags</a>&gt;</code>
+                           </span></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="struct" href="../forecast/struct.ApiResponse.html" title="struct forecast::ApiResponse">ApiResponse</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#829' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="struct" href="../forecast/struct.ApiResponse.html" title="struct forecast::ApiResponse">ApiResponse</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
-</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../forecast/struct.ApiResponse.html' title='forecast::ApiResponse'>ApiResponse</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class="struct" href="../forecast/struct.ApiResponse.html" title="struct forecast::ApiResponse">ApiResponse</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../forecast/struct.ApiResponse.html" title="struct forecast::ApiResponse">ApiResponse</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#829' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
