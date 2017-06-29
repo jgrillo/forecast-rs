@@ -591,8 +591,14 @@ pub enum Lang {
     #[serde(rename = "be")]
     Belarusian,
 
+    #[serde(rename = "bg")]
+    Bulgarian,
+
     #[serde(rename = "bs")]
     Bosnian,
+
+    #[serde(rename = "ca")]
+    Catalan,
 
     #[serde(rename = "cz")]
     Czech,
@@ -608,6 +614,9 @@ pub enum Lang {
 
     #[serde(rename = "es")]
     Spanish,
+
+    #[serde(rename = "et")]
+    Estonian,
 
     #[serde(rename = "fr")]
     French,
@@ -626,6 +635,9 @@ pub enum Lang {
 
     #[serde(rename = "is")]
     Icelandic,
+
+    #[serde(rename = "ka")]
+    Georgian,
 
     #[serde(rename = "kw")]
     Cornish,
@@ -690,6 +702,19 @@ pub enum Units {
 
     #[serde(rename = "si")]
     SI
+}
+
+/// Model object representing an `Alert`s severity.
+#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+pub enum Severity {
+    #[serde(rename = "advisory")]
+    Advisory,
+
+    #[serde(rename = "watch")]
+    Watch,
+
+    #[serde(rename = "warning")]
+    Warning,
 }
 
 /// Model object containing various properties, each representing the average
@@ -782,6 +807,12 @@ pub struct DataPoint {
     #[serde(rename = "windBearing")]
     pub wind_bearing: Option<f64>,
 
+    #[serde(rename = "windGust")]
+    pub wind_gust: Option<f64>,
+
+    #[serde(rename = "windGustTime")]
+    pub wind_gust_time: Option<u64>,
+
     #[serde(rename = "windSpeed")]
     pub wind_speed: Option<f64>
 }
@@ -803,7 +834,13 @@ pub struct DataBlock {
 pub struct Alert {
     pub description: String,
 
-    pub expires: u64,
+    pub expires: Option<u64>,
+
+    pub regions: Vec<String>,
+
+    pub severity: Severity,
+
+    pub time: u64,
 
     pub title: String,
 
@@ -816,9 +853,6 @@ pub struct Alert {
 pub struct Flags {
     #[serde(rename = "darksky-unavailable")]
     pub darksky_unavailable: Option<String>,
-
-    #[serde(rename = "metno-license")]
-    pub metno_license: Option<String>,
 
     pub sources: Vec<String>,
 
@@ -833,8 +867,6 @@ pub struct ApiResponse {
     pub longitude: f64,
 
     pub timezone: String,
-
-    pub offset: Option<u64>,
 
     pub currently: Option<DataPoint>,
 
