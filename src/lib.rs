@@ -154,7 +154,7 @@ impl<'a> ApiClient<'a> {
 // request model objects and their builders
 
 /// Model object representing a request to the Forecast API.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct ForecastRequest<'a> {
     api_key: &'a str,
     latitude: f64,
@@ -197,7 +197,7 @@ impl<'a> IntoUrl for ForecastRequest<'a> {
 }
 
 /// Builder object used to construct a ForecastRequest.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct ForecastRequestBuilder<'a> {
     api_key: &'a str,
     latitude: f64,
@@ -327,7 +327,7 @@ impl<'a> ForecastRequestBuilder<'a> {
 }
 
 /// Model object representing a request to the Time Machine API.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct TimeMachineRequest<'a> {
     api_key: &'a str,
     latitude: f64,
@@ -370,7 +370,7 @@ impl<'a> IntoUrl for TimeMachineRequest<'a> {
 }
 
 /// Builder object used to construct a TimeMachineRequest.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct TimeMachineRequestBuilder<'a> {
     api_key: &'a str,
     latitude: f64,
@@ -494,7 +494,7 @@ impl<'a> TimeMachineRequestBuilder<'a> {
 // data model objects
 
 /// Model object representing an icon for display.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum Icon {
     #[serde(rename = "clear-day")]
     ClearDay,
@@ -538,7 +538,7 @@ pub enum Icon {
 
 /// Model object representing the kind of precipitation ocurring at a particular
 /// time.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum PrecipType {
     #[serde(rename = "rain")]
     Rain,
@@ -551,7 +551,7 @@ pub enum PrecipType {
 }
 
 /// Model object representing a DataBlock to exclude from the response.
-#[derive(Serialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
 pub enum ExcludeBlock {
     #[serde(rename = "currently")]
     Currently,
@@ -574,14 +574,14 @@ pub enum ExcludeBlock {
 
 /// When present in a request, this feature causes response data to be reported
 /// for 168 hours into the future instead of 48 hours.
-#[derive(Serialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
 pub enum ExtendBy {
     #[serde(rename = "hourly")]
     Hourly,
 }
 
 /// Model object representing language.
-#[derive(Serialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
 pub enum Lang {
     #[serde(rename = "ar")]
     Arabic,
@@ -687,7 +687,7 @@ pub enum Lang {
 }
 
 /// Model object representing measurement units.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum Units {
     #[serde(rename = "auto")]
     Auto,
@@ -706,7 +706,7 @@ pub enum Units {
 }
 
 /// Model object representing an `Alert`s severity.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum Severity {
     #[serde(rename = "advisory")]
     Advisory,
@@ -721,7 +721,7 @@ pub enum Severity {
 /// Model object containing various properties, each representing the average
 /// (unless otherwise specified) of a particular weather phenomenon ocurring
 /// during a period of time.
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct DataPoint {
     #[serde(rename = "apparentTemperature")]
     pub apparent_temperature: Option<f64>,
@@ -820,7 +820,7 @@ pub struct DataPoint {
 
 /// Model object representing the various weather phenomena ocurring over a
 /// period of time.
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct DataBlock {
     pub data: Vec<DataPoint>,
 
@@ -831,7 +831,7 @@ pub struct DataBlock {
 
 /// Model object representing a severe weather warning issued by a government
 /// authority for the requested location.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub struct Alert {
     pub description: String,
 
@@ -850,7 +850,7 @@ pub struct Alert {
 
 /// Model object representing a flag which contains miscellaneous metadata about
 /// a request.
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Flags {
     #[serde(rename = "darksky-unavailable")]
     pub darksky_unavailable: Option<String>,
@@ -861,7 +861,7 @@ pub struct Flags {
 }
 
 /// Model object representing a Forecast or Time Machine API response.
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct ApiResponse {
     pub latitude: f64,
 
