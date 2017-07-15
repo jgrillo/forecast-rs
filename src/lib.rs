@@ -99,7 +99,7 @@ use std::option::Option;
 
 use itertools::join;
 
-use reqwest::{Url, Result as ApiResult, UrlError, Client, Response, IntoUrl};
+use reqwest::{Url, Result as ApiResult, Client, Response};
 use reqwest::header::{Encoding, AcceptEncoding, qitem};
 
 // constants
@@ -134,7 +134,7 @@ impl<'a> ApiClient<'a> {
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
     pub fn get_forecast(self, request: ForecastRequest) -> ApiResult<Response> {
-        self.client.get(request).header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
+        self.client.get(request.url)?.header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
     }
 
     /// Send a [Time Machine
@@ -147,7 +147,7 @@ impl<'a> ApiClient<'a> {
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
     pub fn get_time_machine(self, request: TimeMachineRequest) -> ApiResult<Response> {
-        self.client.get(request).header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
+        self.client.get(request.url)?.header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
     }
 }
 
@@ -187,12 +187,6 @@ impl<'a> ForecastRequest<'a> {
             lang: lang,
             units: units,
         }
-    }
-}
-
-impl<'a> IntoUrl for ForecastRequest<'a> {
-    fn into_url(self) -> Result<Url, UrlError> {
-        Result::Ok(self.url)
     }
 }
 
@@ -360,12 +354,6 @@ impl<'a> TimeMachineRequest<'a> {
             lang: lang,
             units: units,
         }
-    }
-}
-
-impl<'a> IntoUrl for TimeMachineRequest<'a> {
-    fn into_url(self) -> Result<Url, UrlError> {
-        Result::Ok(self.url)
     }
 }
 
