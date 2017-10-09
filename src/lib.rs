@@ -59,7 +59,7 @@ limitations under the License.*/
 //! fn main() {
 //!     let api_key = "my_dark_sky_api_key"; // please don't actually hardcode your API key!
 //!
-//!     let reqwest_client = Client::new().unwrap();
+//!     let reqwest_client = Client::new();
 //!     let api_client = ApiClient::new(&reqwest_client);
 //!
 //!     let mut blocks = vec![ExcludeBlock::Daily, ExcludeBlock::Alerts];
@@ -134,7 +134,7 @@ impl<'a> ApiClient<'a> {
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
     pub fn get_forecast(self, request: ForecastRequest) -> ApiResult<Response> {
-        self.client.get(request.url)?.header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
+        self.client.get(request.url).header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
     }
 
     /// Send a [Time Machine
@@ -147,7 +147,7 @@ impl<'a> ApiClient<'a> {
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
     pub fn get_time_machine(self, request: TimeMachineRequest) -> ApiResult<Response> {
-        self.client.get(request.url)?.header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
+        self.client.get(request.url).header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
     }
 }
 
