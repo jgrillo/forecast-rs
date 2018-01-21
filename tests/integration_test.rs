@@ -1,4 +1,4 @@
-/*Copyright 2016-2017 Jesse C. Grillo
+/*Copyright 2016-2018 Jesse C. Grillo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ extern crate forecast;
 
 use std::error::Error;
 use std::fs::File;
-use std::path::PathBuf;
+use std::path::{PathBuf, Path};
 
 use reqwest::{Client, StatusCode};
 
@@ -31,19 +31,13 @@ use forecast::{ApiResponse, ApiClient, ForecastRequestBuilder,
 
 // constants
 
-const LAT: f64 = 6.66;
-const LONG: f64 = 66.6;
-const TIME: u64 = 666;
+const LAT: f64 = 42.3736;
+const LONG: f64 = -71.1097;
+const TIME: u64 = 1505899999;
 
 // tests for serde models
 
-#[test]
-fn test_response_serde() {
-    let mut path_buf = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path_buf.push("resources/tests/forecast_response_10-23-2016.json");
-
-    let path = path_buf.as_path();
-
+fn test_response_serde(path: &Path) {
     let file = match File::open(&path) {
         Err(reason) => panic!("couldn't open {}: {}", path.display(), reason.description()),
         Ok(file) => file
@@ -58,6 +52,26 @@ fn test_response_serde() {
     assert_eq!(deserialized_response, deserialized_again);
 }
 
+#[test]
+fn test_response_serde_10_23_2016() {
+    let mut path_buf = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    path_buf.push("resources/tests/forecast_response_10-23-2016.json");
+
+    let path = path_buf.as_path();
+
+    test_response_serde(path);
+}
+
+#[test]
+fn test_response_serde_01_21_2018() {
+    let mut path_buf = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    path_buf.push("resources/tests/forecast_response_01-21-2018.json");
+
+    let path = path_buf.as_path();
+
+    test_response_serde(path);
+}
+
 // tests which perform network calls.
 //
 // To execute these tests, run the following command in the project
@@ -70,7 +84,7 @@ fn test_response_serde() {
 fn test_get_forecast_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let reqwest_client = Client::new().unwrap();
+    let reqwest_client = Client::new();
     let api_client = ApiClient::new(&reqwest_client);
 
     let forecast_request = ForecastRequestBuilder::new(api_key, LAT, LONG).build();
@@ -78,7 +92,16 @@ fn test_get_forecast_request_default() {
     let response = api_client.get_forecast(forecast_request).unwrap();
     let status = response.status();
 
-    assert_eq!(*status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::Ok);
+
+    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+
+    assert_eq!(api_response.latitude, LAT);
+    assert_eq!(api_response.longitude, LONG);
+
+    // Use the following invocation to display the JSON response:
+    // FORECAST_API_KEY=$YOUR_FORECAST_API_KEY cargo test --features integration -- --nocapture
+    println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
 
 #[test]
@@ -86,23 +109,33 @@ fn test_get_forecast_request_default() {
 fn test_get_forecast_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let reqwest_client = Client::new().unwrap();
+    let reqwest_client = Client::new();
     let api_client = ApiClient::new(&reqwest_client);
 
-    let mut blocks = vec![ExcludeBlock::Daily, ExcludeBlock::Alerts];
+    let mut blocks = vec![ExcludeBlock::Alerts];
 
     let forecast_request = ForecastRequestBuilder::new(api_key, LAT, LONG)
-        .exclude_block(ExcludeBlock::Hourly)
+        .exclude_block(ExcludeBlock::Flags)
         .exclude_blocks(&mut blocks)
         .extend(ExtendBy::Hourly)
-        .lang(Lang::Arabic)
-        .units(Units::Imperial)
+        .lang(Lang::Swedish)
+        .units(Units::SI)
         .build();
 
     let response = api_client.get_forecast(forecast_request).unwrap();
+    response.headers();
     let status = response.status();
 
-    assert_eq!(*status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::Ok);
+
+    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+
+    assert_eq!(api_response.latitude, LAT);
+    assert_eq!(api_response.longitude, LONG);
+
+    // Use the following invocation to display the JSON response:
+    // FORECAST_API_KEY=$YOUR_FORECAST_API_KEY cargo test --features integration -- --nocapture
+    println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
 
 #[test]
@@ -110,7 +143,7 @@ fn test_get_forecast_request_full() {
 fn test_get_time_machine_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let reqwest_client = Client::new().unwrap();
+    let reqwest_client = Client::new();
     let api_client = ApiClient::new(&reqwest_client);
 
     let time_machine_request = TimeMachineRequestBuilder::new(
@@ -120,7 +153,16 @@ fn test_get_time_machine_request_default() {
     let response = api_client.get_time_machine(time_machine_request).unwrap();
     let status = response.status();
 
-    assert_eq!(*status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::Ok);
+
+    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+
+    assert_eq!(api_response.latitude, LAT);
+    assert_eq!(api_response.longitude, LONG);
+
+    // Use the following invocation to display the JSON response:
+    // FORECAST_API_KEY=$YOUR_FORECAST_API_KEY cargo test --features integration -- --nocapture
+    println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
 
 #[test]
@@ -128,22 +170,31 @@ fn test_get_time_machine_request_default() {
 fn test_get_time_machine_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let reqwest_client = Client::new().unwrap();
+    let reqwest_client = Client::new();
     let api_client = ApiClient::new(&reqwest_client);
 
-    let mut blocks = vec![ExcludeBlock::Daily, ExcludeBlock::Alerts];
+    let mut blocks = vec![ExcludeBlock::Daily];
 
     let time_machine_request = TimeMachineRequestBuilder::new(
         api_key, LAT, LONG, TIME
     )
-        .exclude_block(ExcludeBlock::Hourly)
+        .exclude_block(ExcludeBlock::Alerts)
         .exclude_blocks(&mut blocks)
         .lang(Lang::Arabic)
-        .units(Units::Imperial)
+        .units(Units::SI)
         .build();
 
     let response = api_client.get_time_machine(time_machine_request).unwrap();
     let status = response.status();
 
-    assert_eq!(*status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::Ok);
+
+    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+
+    assert_eq!(api_response.latitude, LAT);
+    assert_eq!(api_response.longitude, LONG);
+
+    // Use the following invocation to display the JSON response:
+    // FORECAST_API_KEY=$YOUR_FORECAST_API_KEY cargo test --features integration -- --nocapture
+    println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
