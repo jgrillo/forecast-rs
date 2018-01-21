@@ -1,4 +1,4 @@
-/*Copyright 2016-2017 Jesse C. Grillo
+/*Copyright 2016-2018 Jesse C. Grillo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -116,13 +116,13 @@ static UNITS: &'static str = "units";
 /// sends requests to the Forecast and Time Machine APIs.
 #[derive(Debug)]
 pub struct ApiClient<'a> {
-    client: &'a Client,
+    client: &'a Client
 }
 
 impl<'a> ApiClient<'a> {
     /// Construct a new ApiClient.
     pub fn new(client: &'a Client) -> ApiClient<'a> {
-        ApiClient { client: client }
+        ApiClient { client }
     }
 
     /// Send a [Forecast API](https://darksky.net/dev/docs/forecast)
@@ -134,7 +134,9 @@ impl<'a> ApiClient<'a> {
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
     pub fn get_forecast(self, request: ForecastRequest) -> ApiResult<Response> {
-        self.client.get(request.url).header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
+        self.client.get(request.url)
+            .header(AcceptEncoding(vec![qitem(Encoding::Gzip)]))
+            .send()
     }
 
     /// Send a [Time Machine
@@ -147,7 +149,9 @@ impl<'a> ApiClient<'a> {
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
     pub fn get_time_machine(self, request: TimeMachineRequest) -> ApiResult<Response> {
-        self.client.get(request.url).header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
+        self.client.get(request.url)
+            .header(AcceptEncoding(vec![qitem(Encoding::Gzip)]))
+            .send()
     }
 }
 
@@ -163,7 +167,7 @@ pub struct ForecastRequest<'a> {
     exclude: Vec<ExcludeBlock>,
     extend: Option<ExtendBy>,
     lang: Option<Lang>,
-    units: Option<Units>,
+    units: Option<Units>
 }
 
 impl<'a> ForecastRequest<'a> {
@@ -175,17 +179,17 @@ impl<'a> ForecastRequest<'a> {
         exclude: Vec<ExcludeBlock>,
         extend: Option<ExtendBy>,
         lang: Option<Lang>,
-        units: Option<Units>,
+        units: Option<Units>
     ) -> ForecastRequest<'a> {
         ForecastRequest {
-            api_key: api_key,
-            latitude: latitude,
-            longitude: longitude,
-            url: url,
-            exclude: exclude,
-            extend: extend,
-            lang: lang,
-            units: units,
+            api_key,
+            latitude,
+            longitude,
+            url,
+            exclude,
+            extend,
+            lang,
+            units
         }
     }
 }
@@ -199,7 +203,7 @@ pub struct ForecastRequestBuilder<'a> {
     exclude: Vec<ExcludeBlock>,
     extend: Option<ExtendBy>,
     lang: Option<Lang>,
-    units: Option<Units>,
+    units: Option<Units>
 }
 
 impl<'a> ForecastRequestBuilder<'a> {
@@ -207,13 +211,13 @@ impl<'a> ForecastRequestBuilder<'a> {
     /// `api_key`, `latitude`, and `longitude`.
     pub fn new(api_key: &'a str, latitude: f64, longitude: f64) -> ForecastRequestBuilder {
         ForecastRequestBuilder {
-            api_key: api_key,
-            latitude: latitude,
-            longitude: longitude,
+            api_key,
+            latitude,
+            longitude,
             exclude: Vec::new(),
             extend: None,
             lang: None,
-            units: None,
+            units: None
         }
     }
 
@@ -224,10 +228,8 @@ impl<'a> ForecastRequestBuilder<'a> {
     }
 
     /// Add multiple DataBlocks to exclude from the response.
-    pub fn exclude_blocks(
-        mut self,
-        exclude_blocks: &mut Vec<ExcludeBlock>,
-    ) -> ForecastRequestBuilder<'a> {
+    pub fn exclude_blocks(mut self, exclude_blocks: &mut Vec<ExcludeBlock>)
+        -> ForecastRequestBuilder<'a> {
         self.exclude.append(exclude_blocks);
         self
     }
@@ -261,7 +263,7 @@ impl<'a> ForecastRequestBuilder<'a> {
             self.exclude,
             self.extend,
             self.lang,
-            self.units,
+            self.units
         )
     }
 
@@ -288,7 +290,7 @@ impl<'a> ForecastRequestBuilder<'a> {
                             json.trim_matches('"').to_string()
                         })
                         .collect::<Vec<String>>(),
-                    ",",
+                    ","
                 );
 
                 query_pairs.append_pair(EXCLUDE, &excludes);
@@ -297,21 +299,21 @@ impl<'a> ForecastRequestBuilder<'a> {
             if let &Some(ref extend) = &self.extend {
                 query_pairs.append_pair(
                     EXTEND,
-                    serde_json::to_string(&extend).unwrap().trim_matches('"'),
+                    serde_json::to_string(&extend).unwrap().trim_matches('"')
                 );
             }
 
             if let &Some(ref lang) = &self.lang {
                 query_pairs.append_pair(
                     LANG,
-                    serde_json::to_string(&lang).unwrap().trim_matches('"'),
+                    serde_json::to_string(&lang).unwrap().trim_matches('"')
                 );
             }
 
             if let &Some(ref units) = &self.units {
                 query_pairs.append_pair(
                     UNITS,
-                    serde_json::to_string(&units).unwrap().trim_matches('"'),
+                    serde_json::to_string(&units).unwrap().trim_matches('"')
                 );
             }
         };
@@ -330,7 +332,7 @@ pub struct TimeMachineRequest<'a> {
     url: Url,
     exclude: Vec<ExcludeBlock>,
     lang: Option<Lang>,
-    units: Option<Units>,
+    units: Option<Units>
 }
 
 impl<'a> TimeMachineRequest<'a> {
@@ -342,17 +344,17 @@ impl<'a> TimeMachineRequest<'a> {
         url: Url,
         exclude: Vec<ExcludeBlock>,
         lang: Option<Lang>,
-        units: Option<Units>,
+        units: Option<Units>
     ) -> TimeMachineRequest<'a> {
         TimeMachineRequest {
-            api_key: api_key,
-            latitude: latitude,
-            longitude: longitude,
-            time: time,
-            url: url,
-            exclude: exclude,
-            lang: lang,
-            units: units,
+            api_key,
+            latitude,
+            longitude,
+            time,
+            url,
+            exclude,
+            lang,
+            units
         }
     }
 }
@@ -366,7 +368,7 @@ pub struct TimeMachineRequestBuilder<'a> {
     time: u64,
     exclude: Vec<ExcludeBlock>,
     lang: Option<Lang>,
-    units: Option<Units>,
+    units: Option<Units>
 }
 
 impl<'a> TimeMachineRequestBuilder<'a> {
@@ -376,16 +378,16 @@ impl<'a> TimeMachineRequestBuilder<'a> {
         api_key: &'a str,
         latitude: f64,
         longitude: f64,
-        time: u64,
+        time: u64
     ) -> TimeMachineRequestBuilder {
         TimeMachineRequestBuilder {
-            api_key: api_key,
-            latitude: latitude,
-            longitude: longitude,
-            time: time,
+            api_key,
+            latitude,
+            longitude,
+            time,
             exclude: Vec::new(),
             lang: None,
-            units: None,
+            units: None
         }
     }
 
@@ -398,7 +400,7 @@ impl<'a> TimeMachineRequestBuilder<'a> {
     /// Add multiple DataBlocks to exclude from the response.
     pub fn exclude_blocks(
         mut self,
-        exclude_blocks: &mut Vec<ExcludeBlock>,
+        exclude_blocks: &mut Vec<ExcludeBlock>
     ) -> TimeMachineRequestBuilder<'a> {
         self.exclude.append(exclude_blocks);
         self
@@ -426,7 +428,7 @@ impl<'a> TimeMachineRequestBuilder<'a> {
             self.build_url(),
             self.exclude,
             self.lang,
-            self.units,
+            self.units
         )
     }
 
@@ -463,14 +465,14 @@ impl<'a> TimeMachineRequestBuilder<'a> {
             if let &Some(ref lang) = &self.lang {
                 query_pairs.append_pair(
                     LANG,
-                    serde_json::to_string(&lang).unwrap().trim_matches('"'),
+                    serde_json::to_string(&lang).unwrap().trim_matches('"')
                 );
             }
 
             if let &Some(ref units) = &self.units {
                 query_pairs.append_pair(
                     UNITS,
-                    serde_json::to_string(&units).unwrap().trim_matches('"'),
+                    serde_json::to_string(&units).unwrap().trim_matches('"')
                 );
             }
         }
@@ -521,10 +523,10 @@ pub enum Icon {
     Thunderstorm,
 
     #[serde(rename = "tornado")]
-    Tornado,
+    Tornado
 }
 
-/// Model object representing the kind of precipitation ocurring at a particular
+/// Model object representing the kind of precipitation occurring at a particular
 /// time.
 #[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum PrecipType {
@@ -535,11 +537,11 @@ pub enum PrecipType {
     Snow,
 
     #[serde(rename = "sleet")]
-    Sleet,
+    Sleet
 }
 
 /// Model object representing a DataBlock to exclude from the response.
-#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum ExcludeBlock {
     #[serde(rename = "currently")]
     Currently,
@@ -557,19 +559,19 @@ pub enum ExcludeBlock {
     Alerts,
 
     #[serde(rename = "flags")]
-    Flags,
+    Flags
 }
 
 /// When present in a request, this feature causes response data to be reported
 /// for 168 hours into the future instead of 48 hours.
-#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum ExtendBy {
     #[serde(rename = "hourly")]
-    Hourly,
+    Hourly
 }
 
 /// Model object representing language.
-#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum Lang {
     #[serde(rename = "ar")]
     Arabic,
@@ -592,6 +594,9 @@ pub enum Lang {
     #[serde(rename = "cz")]
     Czech,
 
+    #[serde(rename = "da")]
+    Danish,
+
     #[serde(rename = "de")]
     German,
 
@@ -607,6 +612,9 @@ pub enum Lang {
     #[serde(rename = "et")]
     Estonian,
 
+    #[serde(rename = "fi")]
+    Finnish,
+
     #[serde(rename = "fr")]
     French,
 
@@ -619,11 +627,14 @@ pub enum Lang {
     #[serde(rename = "id")]
     Indonesian,
 
+    #[serde(rename = "is")]
+    Icelandic,
+
     #[serde(rename = "it")]
     Italian,
 
-    #[serde(rename = "is")]
-    Icelandic,
+    #[serde(rename = "ja")]
+    Japanese,
 
     #[serde(rename = "ka")]
     Georgian,
@@ -641,13 +652,19 @@ pub enum Lang {
     Polish,
 
     #[serde(rename = "pt")]
-    Portugese,
+    Portuguese,
+
+    #[serde(rename = "ro")]
+    Romanian,
 
     #[serde(rename = "ru")]
     Russian,
 
     #[serde(rename = "sk")]
     Slovak,
+
+    #[serde(rename = "sl")]
+    Slovenian,
 
     #[serde(rename = "sr")]
     Serbian,
@@ -671,7 +688,7 @@ pub enum Lang {
     SimplifiedChinese,
 
     #[serde(rename = "zh-tw")]
-    TraditionalChinese,
+    TraditionalChinese
 }
 
 /// Model object representing measurement units.
@@ -690,7 +707,7 @@ pub enum Units {
     Imperial,
 
     #[serde(rename = "si")]
-    SI,
+    SI
 }
 
 /// Model object representing an `Alert`s severity.
@@ -703,26 +720,42 @@ pub enum Severity {
     Watch,
 
     #[serde(rename = "warning")]
-    Warning,
+    Warning
 }
 
 /// Model object containing various properties, each representing the average
-/// (unless otherwise specified) of a particular weather phenomenon ocurring
+/// (unless otherwise specified) of a particular weather phenomenon occurring
 /// during a period of time.
 #[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct DataPoint {
     #[serde(rename = "apparentTemperature")]
     pub apparent_temperature: Option<f64>,
 
+    #[serde(rename = "apparentTemperatureHigh")]
+    pub apparent_temperature_high: Option<f64>,
+
+    #[serde(rename = "apparentTemperatureHighTime")]
+    pub apparent_temperature_high_time: Option<u64>,
+
+    #[serde(rename = "apparentTemperatureLow")]
+    pub apparent_temperature_low: Option<f64>,
+
+    #[serde(rename = "apparentTemperatureLowTime")]
+    pub apparent_temperature_low_time: Option<u64>,
+
+    #[deprecated(since = "1.0.0")]
     #[serde(rename = "apparentTemperatureMax")]
     pub apparent_temperature_max: Option<f64>,
 
+    #[deprecated(since = "1.0.0")]
     #[serde(rename = "apparentTemperatureMaxTime")]
     pub apparent_temperature_max_time: Option<u64>,
 
+    #[deprecated(since = "1.0.0")]
     #[serde(rename = "apparentTemperatureMin")]
     pub apparent_temperature_min: Option<f64>,
 
+    #[deprecated(since = "1.0.0")]
     #[serde(rename = "apparentTemperatureMinTime")]
     pub apparent_temperature_min_time: Option<u64>,
 
@@ -777,19 +810,41 @@ pub struct DataPoint {
 
     pub temperature: Option<f64>,
 
+    #[serde(rename = "temperatureHigh")]
+    pub temperature_high: Option<f64>,
+
+    #[serde(rename = "temperatureHighTime")]
+    pub temperature_high_time: Option<u64>,
+
+    #[serde(rename = "temperatureLow")]
+    pub temperature_low: Option<f64>,
+
+    #[serde(rename = "temperatureLowTime")]
+    pub temperature_low_time: Option<u64>,
+
+    #[deprecated(since = "1.0.0")]
     #[serde(rename = "temperatureMax")]
     pub temperature_max: Option<f64>,
 
+    #[deprecated(since = "1.0.0")]
     #[serde(rename = "temperatureMaxTime")]
     pub temperature_max_time: Option<u64>,
 
+    #[deprecated(since = "1.0.0")]
     #[serde(rename = "temperatureMin")]
     pub temperature_min: Option<f64>,
 
+    #[deprecated(since = "1.0.0")]
     #[serde(rename = "temperatureMinTime")]
     pub temperature_min_time: Option<u64>,
 
     pub time: u64,
+
+    #[serde(rename = "uvIndex")]
+    pub uv_index: Option<f64>,
+
+    #[serde(rename = "uvIndexTime")]
+    pub uv_index_time: Option<u64>,
 
     pub visibility: Option<f64>,
 
@@ -803,10 +858,10 @@ pub struct DataPoint {
     pub wind_gust_time: Option<u64>,
 
     #[serde(rename = "windSpeed")]
-    pub wind_speed: Option<f64>,
+    pub wind_speed: Option<f64>
 }
 
-/// Model object representing the various weather phenomena ocurring over a
+/// Model object representing the various weather phenomena occurring over a
 /// period of time.
 #[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct DataBlock {
@@ -814,7 +869,7 @@ pub struct DataBlock {
 
     pub summary: Option<String>,
 
-    pub icon: Option<Icon>,
+    pub icon: Option<Icon>
 }
 
 /// Model object representing a severe weather warning issued by a government
@@ -823,7 +878,7 @@ pub struct DataBlock {
 pub struct Alert {
     pub description: String,
 
-    pub expires: Option<u64>,
+    pub expires: u64,
 
     pub regions: Vec<String>,
 
@@ -833,19 +888,19 @@ pub struct Alert {
 
     pub title: String,
 
-    pub uri: String,
+    pub uri: String
 }
 
 /// Model object representing a flag which contains miscellaneous metadata about
 /// a request.
-#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub struct Flags {
     #[serde(rename = "darksky-unavailable")]
     pub darksky_unavailable: Option<String>,
 
     pub sources: Vec<String>,
 
-    pub units: Units,
+    pub units: Units
 }
 
 /// Model object representing a Forecast or Time Machine API response.
@@ -857,6 +912,9 @@ pub struct ApiResponse {
 
     pub timezone: String,
 
+    #[deprecated(since = "1.0.0")]
+    pub offset: i64,
+
     pub currently: Option<DataPoint>,
 
     pub minutely: Option<DataBlock>,
@@ -867,7 +925,7 @@ pub struct ApiResponse {
 
     pub alerts: Option<Vec<Alert>>,
 
-    pub flags: Option<Flags>,
+    pub flags: Option<Flags>
 }
 
 // unit tests
@@ -912,7 +970,7 @@ mod tests {
             Vec::new(),
             None,
             None,
-            None,
+            None
         );
 
         assert_eq!(expected.api_key, request.api_key);
@@ -965,11 +1023,11 @@ mod tests {
             vec![
                 ExcludeBlock::Hourly,
                 ExcludeBlock::Daily,
-                ExcludeBlock::Alerts,
+                ExcludeBlock::Alerts
             ],
             Some(ExtendBy::Hourly),
             Some(Lang::Arabic),
-            Some(Units::Imperial),
+            Some(Units::Imperial)
         );
 
         assert_eq!(expected, request);
@@ -1012,11 +1070,11 @@ mod tests {
             vec![
                 ExcludeBlock::Hourly,
                 ExcludeBlock::Daily,
-                ExcludeBlock::Alerts,
+                ExcludeBlock::Alerts
             ],
             Some(ExtendBy::Hourly),
             Some(Lang::Arabic),
-            Some(Units::Imperial),
+            Some(Units::Imperial)
         );
 
         assert_eq!(expected, builder.build());
@@ -1024,7 +1082,9 @@ mod tests {
 
     #[test]
     fn test_time_machine_request_builder_defaults() {
-        let request = TimeMachineRequestBuilder::new(API_KEY, LAT, LONG, TIME).build();
+        let request = TimeMachineRequestBuilder::new(
+            API_KEY, LAT, LONG, TIME
+        ).build();
 
         let expected_url = Url::parse(&format!(
             "{base}/{key}/{lat:.16},{long:.16},{time}?",
@@ -1043,7 +1103,7 @@ mod tests {
             expected_url,
             Vec::new(),
             None,
-            None,
+            None
         );
 
         assert_eq!(expected.api_key, request.api_key);
@@ -1096,10 +1156,10 @@ mod tests {
             vec![
                 ExcludeBlock::Hourly,
                 ExcludeBlock::Daily,
-                ExcludeBlock::Alerts,
+                ExcludeBlock::Alerts
             ],
             Some(Lang::Arabic),
-            Some(Units::Imperial),
+            Some(Units::Imperial)
         );
 
         assert_eq!(expected, request);
@@ -1142,10 +1202,10 @@ mod tests {
             vec![
                 ExcludeBlock::Hourly,
                 ExcludeBlock::Daily,
-                ExcludeBlock::Alerts,
+                ExcludeBlock::Alerts
             ],
             Some(Lang::Arabic),
-            Some(Units::Imperial),
+            Some(Units::Imperial)
         );
 
         assert_eq!(expected, builder.build());
