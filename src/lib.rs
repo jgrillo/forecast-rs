@@ -59,7 +59,7 @@ limitations under the License.*/
 //! fn main() {
 //!     let api_key = "my_dark_sky_api_key"; // please don't actually hardcode your API key!
 //!
-//!     let reqwest_client = Client::new().unwrap();
+//!     let reqwest_client = Client::new();
 //!     let api_client = ApiClient::new(&reqwest_client);
 //!
 //!     let mut blocks = vec![ExcludeBlock::Daily, ExcludeBlock::Alerts];
@@ -99,8 +99,8 @@ use std::option::Option;
 
 use itertools::join;
 
-use reqwest::{Url, Result as ApiResult, Error, UrlError, Client,
-              Response, IntoUrl};
+use reqwest::{Url, Result as ApiResult, Client, Response};
+use reqwest::header::{Encoding, AcceptEncoding, qitem};
 
 // constants
 
@@ -116,15 +116,13 @@ static UNITS: &'static str = "units";
 /// sends requests to the Forecast and Time Machine APIs.
 #[derive(Debug)]
 pub struct ApiClient<'a> {
-    client: &'a Client
+    client: &'a Client,
 }
 
 impl<'a> ApiClient<'a> {
     /// Construct a new ApiClient.
     pub fn new(client: &'a Client) -> ApiClient<'a> {
-        ApiClient {
-            client: client
-        }
+        ApiClient { client: client }
     }
 
     /// Send a [Forecast API](https://darksky.net/dev/docs/forecast)
@@ -136,7 +134,7 @@ impl<'a> ApiClient<'a> {
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
     pub fn get_forecast(self, request: ForecastRequest) -> ApiResult<Response> {
-        self.client.get(request).send()
+        self.client.get(request.url).header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
     }
 
     /// Send a [Time Machine
@@ -149,14 +147,14 @@ impl<'a> ApiClient<'a> {
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
     pub fn get_time_machine(self, request: TimeMachineRequest) -> ApiResult<Response> {
-        self.client.get(request).send()
+        self.client.get(request.url).header(AcceptEncoding(vec![qitem(Encoding::Gzip)])).send()
     }
 }
 
 // request model objects and their builders
 
 /// Model object representing a request to the Forecast API.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct ForecastRequest<'a> {
     api_key: &'a str,
     latitude: f64,
@@ -165,7 +163,7 @@ pub struct ForecastRequest<'a> {
     exclude: Vec<ExcludeBlock>,
     extend: Option<ExtendBy>,
     lang: Option<Lang>,
-    units: Option<Units>
+    units: Option<Units>,
 }
 
 impl<'a> ForecastRequest<'a> {
@@ -177,7 +175,7 @@ impl<'a> ForecastRequest<'a> {
         exclude: Vec<ExcludeBlock>,
         extend: Option<ExtendBy>,
         lang: Option<Lang>,
-        units: Option<Units>
+        units: Option<Units>,
     ) -> ForecastRequest<'a> {
         ForecastRequest {
             api_key: api_key,
@@ -187,19 +185,13 @@ impl<'a> ForecastRequest<'a> {
             exclude: exclude,
             extend: extend,
             lang: lang,
-            units: units
+            units: units,
         }
     }
 }
 
-impl<'a> IntoUrl for ForecastRequest<'a> {
-    fn into_url(self) -> Result<Url, UrlError> {
-        Result::Ok(self.url)
-    }
-}
-
 /// Builder object used to construct a ForecastRequest.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct ForecastRequestBuilder<'a> {
     api_key: &'a str,
     latitude: f64,
@@ -207,11 +199,10 @@ pub struct ForecastRequestBuilder<'a> {
     exclude: Vec<ExcludeBlock>,
     extend: Option<ExtendBy>,
     lang: Option<Lang>,
-    units: Option<Units>
+    units: Option<Units>,
 }
 
 impl<'a> ForecastRequestBuilder<'a> {
-
     /// A Forecast API request is constructed with required params
     /// `api_key`, `latitude`, and `longitude`.
     pub fn new(api_key: &'a str, latitude: f64, longitude: f64) -> ForecastRequestBuilder {
@@ -222,7 +213,7 @@ impl<'a> ForecastRequestBuilder<'a> {
             exclude: Vec::new(),
             extend: None,
             lang: None,
-            units: None
+            units: None,
         }
     }
 
@@ -234,7 +225,8 @@ impl<'a> ForecastRequestBuilder<'a> {
 
     /// Add multiple DataBlocks to exclude from the response.
     pub fn exclude_blocks(
-        mut self, exclude_blocks: &mut Vec<ExcludeBlock>
+        mut self,
+        exclude_blocks: &mut Vec<ExcludeBlock>,
     ) -> ForecastRequestBuilder<'a> {
         self.exclude.append(exclude_blocks);
         self
@@ -269,17 +261,17 @@ impl<'a> ForecastRequestBuilder<'a> {
             self.exclude,
             self.extend,
             self.lang,
-            self.units
+            self.units,
         )
     }
 
     fn build_url(&self) -> Url {
         let url_string = format!(
             "{base}/{key}/{lat:.16},{long:.16}",
-            base=FORECAST_URL,
-            key=&self.api_key,
-            lat=&self.latitude,
-            long=&self.longitude
+            base = FORECAST_URL,
+            key = &self.api_key,
+            lat = &self.latitude,
+            long = &self.longitude
         );
 
         let mut url = Url::parse(&url_string).unwrap();
@@ -296,7 +288,7 @@ impl<'a> ForecastRequestBuilder<'a> {
                             json.trim_matches('"').to_string()
                         })
                         .collect::<Vec<String>>(),
-                    ","
+                    ",",
                 );
 
                 query_pairs.append_pair(EXCLUDE, &excludes);
@@ -305,21 +297,21 @@ impl<'a> ForecastRequestBuilder<'a> {
             if let &Some(ref extend) = &self.extend {
                 query_pairs.append_pair(
                     EXTEND,
-                    serde_json::to_string(&extend).unwrap().trim_matches('"')
+                    serde_json::to_string(&extend).unwrap().trim_matches('"'),
                 );
             }
 
             if let &Some(ref lang) = &self.lang {
                 query_pairs.append_pair(
                     LANG,
-                    serde_json::to_string(&lang).unwrap().trim_matches('"')
+                    serde_json::to_string(&lang).unwrap().trim_matches('"'),
                 );
             }
 
             if let &Some(ref units) = &self.units {
                 query_pairs.append_pair(
                     UNITS,
-                    serde_json::to_string(&units).unwrap().trim_matches('"')
+                    serde_json::to_string(&units).unwrap().trim_matches('"'),
                 );
             }
         };
@@ -329,7 +321,7 @@ impl<'a> ForecastRequestBuilder<'a> {
 }
 
 /// Model object representing a request to the Time Machine API.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct TimeMachineRequest<'a> {
     api_key: &'a str,
     latitude: f64,
@@ -338,7 +330,7 @@ pub struct TimeMachineRequest<'a> {
     url: Url,
     exclude: Vec<ExcludeBlock>,
     lang: Option<Lang>,
-    units: Option<Units>
+    units: Option<Units>,
 }
 
 impl<'a> TimeMachineRequest<'a> {
@@ -350,7 +342,7 @@ impl<'a> TimeMachineRequest<'a> {
         url: Url,
         exclude: Vec<ExcludeBlock>,
         lang: Option<Lang>,
-        units: Option<Units>
+        units: Option<Units>,
     ) -> TimeMachineRequest<'a> {
         TimeMachineRequest {
             api_key: api_key,
@@ -360,19 +352,13 @@ impl<'a> TimeMachineRequest<'a> {
             url: url,
             exclude: exclude,
             lang: lang,
-            units: units
+            units: units,
         }
     }
 }
 
-impl<'a> IntoUrl for TimeMachineRequest<'a> {
-    fn into_url(self) -> Result<Url, UrlError> {
-        Result::Ok(self.url)
-    }
-}
-
 /// Builder object used to construct a TimeMachineRequest.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct TimeMachineRequestBuilder<'a> {
     api_key: &'a str,
     latitude: f64,
@@ -380,15 +366,17 @@ pub struct TimeMachineRequestBuilder<'a> {
     time: u64,
     exclude: Vec<ExcludeBlock>,
     lang: Option<Lang>,
-    units: Option<Units>
+    units: Option<Units>,
 }
 
 impl<'a> TimeMachineRequestBuilder<'a> {
-
     /// A Time Machine API request is constructed with required params
     /// `api_key`, `latitude`, `longitude`, and `time`.
     pub fn new(
-        api_key: &'a str, latitude: f64, longitude: f64, time: u64
+        api_key: &'a str,
+        latitude: f64,
+        longitude: f64,
+        time: u64,
     ) -> TimeMachineRequestBuilder {
         TimeMachineRequestBuilder {
             api_key: api_key,
@@ -397,7 +385,7 @@ impl<'a> TimeMachineRequestBuilder<'a> {
             time: time,
             exclude: Vec::new(),
             lang: None,
-            units: None
+            units: None,
         }
     }
 
@@ -409,7 +397,8 @@ impl<'a> TimeMachineRequestBuilder<'a> {
 
     /// Add multiple DataBlocks to exclude from the response.
     pub fn exclude_blocks(
-        mut self, exclude_blocks: &mut Vec<ExcludeBlock>
+        mut self,
+        exclude_blocks: &mut Vec<ExcludeBlock>,
     ) -> TimeMachineRequestBuilder<'a> {
         self.exclude.append(exclude_blocks);
         self
@@ -437,18 +426,18 @@ impl<'a> TimeMachineRequestBuilder<'a> {
             self.build_url(),
             self.exclude,
             self.lang,
-            self.units
+            self.units,
         )
     }
 
     fn build_url(&self) -> Url {
         let url_string = format!(
-           "{base}/{key}/{lat:.16},{long:.16},{time}",
-            base=FORECAST_URL,
-            key=self.api_key,
-            lat=self.latitude,
-            long=self.longitude,
-            time=self.time
+            "{base}/{key}/{lat:.16},{long:.16},{time}",
+            base = FORECAST_URL,
+            key = self.api_key,
+            lat = self.latitude,
+            long = self.longitude,
+            time = self.time
         );
 
         let mut url = Url::parse(&url_string).unwrap();
@@ -465,7 +454,7 @@ impl<'a> TimeMachineRequestBuilder<'a> {
                             json.trim_matches('"').to_string()
                         })
                         .collect::<Vec<String>>(),
-                    ","
+                    ",",
                 );
 
                 query_pairs.append_pair(EXCLUDE, &excludes);
@@ -474,14 +463,14 @@ impl<'a> TimeMachineRequestBuilder<'a> {
             if let &Some(ref lang) = &self.lang {
                 query_pairs.append_pair(
                     LANG,
-                    serde_json::to_string(&lang).unwrap().trim_matches('"')
+                    serde_json::to_string(&lang).unwrap().trim_matches('"'),
                 );
             }
 
             if let &Some(ref units) = &self.units {
                 query_pairs.append_pair(
                     UNITS,
-                    serde_json::to_string(&units).unwrap().trim_matches('"')
+                    serde_json::to_string(&units).unwrap().trim_matches('"'),
                 );
             }
         }
@@ -493,7 +482,7 @@ impl<'a> TimeMachineRequestBuilder<'a> {
 // data model objects
 
 /// Model object representing an icon for display.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum Icon {
     #[serde(rename = "clear-day")]
     ClearDay,
@@ -532,12 +521,12 @@ pub enum Icon {
     Thunderstorm,
 
     #[serde(rename = "tornado")]
-    Tornado
+    Tornado,
 }
 
 /// Model object representing the kind of precipitation ocurring at a particular
 /// time.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum PrecipType {
     #[serde(rename = "rain")]
     Rain,
@@ -546,11 +535,11 @@ pub enum PrecipType {
     Snow,
 
     #[serde(rename = "sleet")]
-    Sleet
+    Sleet,
 }
 
 /// Model object representing a DataBlock to exclude from the response.
-#[derive(Serialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
 pub enum ExcludeBlock {
     #[serde(rename = "currently")]
     Currently,
@@ -568,19 +557,19 @@ pub enum ExcludeBlock {
     Alerts,
 
     #[serde(rename = "flags")]
-    Flags
+    Flags,
 }
 
 /// When present in a request, this feature causes response data to be reported
 /// for 168 hours into the future instead of 48 hours.
-#[derive(Serialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
 pub enum ExtendBy {
     #[serde(rename = "hourly")]
-    Hourly
+    Hourly,
 }
 
 /// Model object representing language.
-#[derive(Serialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Clone, PartialEq, Eq, Debug)]
 pub enum Lang {
     #[serde(rename = "ar")]
     Arabic,
@@ -591,8 +580,14 @@ pub enum Lang {
     #[serde(rename = "be")]
     Belarusian,
 
+    #[serde(rename = "bg")]
+    Bulgarian,
+
     #[serde(rename = "bs")]
     Bosnian,
+
+    #[serde(rename = "ca")]
+    Catalan,
 
     #[serde(rename = "cz")]
     Czech,
@@ -608,6 +603,9 @@ pub enum Lang {
 
     #[serde(rename = "es")]
     Spanish,
+
+    #[serde(rename = "et")]
+    Estonian,
 
     #[serde(rename = "fr")]
     French,
@@ -626,6 +624,9 @@ pub enum Lang {
 
     #[serde(rename = "is")]
     Icelandic,
+
+    #[serde(rename = "ka")]
+    Georgian,
 
     #[serde(rename = "kw")]
     Cornish,
@@ -670,11 +671,11 @@ pub enum Lang {
     SimplifiedChinese,
 
     #[serde(rename = "zh-tw")]
-    TraditionalChinese
+    TraditionalChinese,
 }
 
 /// Model object representing measurement units.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum Units {
     #[serde(rename = "auto")]
     Auto,
@@ -689,13 +690,26 @@ pub enum Units {
     Imperial,
 
     #[serde(rename = "si")]
-    SI
+    SI,
+}
+
+/// Model object representing an `Alert`s severity.
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
+pub enum Severity {
+    #[serde(rename = "advisory")]
+    Advisory,
+
+    #[serde(rename = "watch")]
+    Watch,
+
+    #[serde(rename = "warning")]
+    Warning,
 }
 
 /// Model object containing various properties, each representing the average
 /// (unless otherwise specified) of a particular weather phenomenon ocurring
 /// during a period of time.
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct DataPoint {
     #[serde(rename = "apparentTemperature")]
     pub apparent_temperature: Option<f64>,
@@ -782,28 +796,40 @@ pub struct DataPoint {
     #[serde(rename = "windBearing")]
     pub wind_bearing: Option<f64>,
 
+    #[serde(rename = "windGust")]
+    pub wind_gust: Option<f64>,
+
+    #[serde(rename = "windGustTime")]
+    pub wind_gust_time: Option<u64>,
+
     #[serde(rename = "windSpeed")]
-    pub wind_speed: Option<f64>
+    pub wind_speed: Option<f64>,
 }
 
 /// Model object representing the various weather phenomena ocurring over a
 /// period of time.
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct DataBlock {
     pub data: Vec<DataPoint>,
 
     pub summary: Option<String>,
 
-    pub icon: Option<Icon>
+    pub icon: Option<Icon>,
 }
 
 /// Model object representing a severe weather warning issued by a government
 /// authority for the requested location.
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub struct Alert {
     pub description: String,
 
-    pub expires: u64,
+    pub expires: Option<u64>,
+
+    pub regions: Vec<String>,
+
+    pub severity: Severity,
+
+    pub time: u64,
 
     pub title: String,
 
@@ -812,29 +838,24 @@ pub struct Alert {
 
 /// Model object representing a flag which contains miscellaneous metadata about
 /// a request.
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Flags {
     #[serde(rename = "darksky-unavailable")]
     pub darksky_unavailable: Option<String>,
 
-    #[serde(rename = "metno-license")]
-    pub metno_license: Option<String>,
-
     pub sources: Vec<String>,
 
-    pub units: Units
+    pub units: Units,
 }
 
 /// Model object representing a Forecast or Time Machine API response.
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct ApiResponse {
     pub latitude: f64,
 
     pub longitude: f64,
 
     pub timezone: String,
-
-    pub offset: Option<u64>,
 
     pub currently: Option<DataPoint>,
 
@@ -846,7 +867,7 @@ pub struct ApiResponse {
 
     pub alerts: Option<Vec<Alert>>,
 
-    pub flags: Option<Flags>
+    pub flags: Option<Flags>,
 }
 
 // unit tests
@@ -854,8 +875,8 @@ pub struct ApiResponse {
 #[cfg(test)]
 mod tests {
     use super::{ForecastRequestBuilder, ForecastRequest, TimeMachineRequestBuilder,
-                TimeMachineRequest, ExcludeBlock, Units, Lang, ExtendBy, FORECAST_URL,
-                EXCLUDE, EXTEND, LANG, UNITS};
+                TimeMachineRequest, ExcludeBlock, Units, Lang, ExtendBy, FORECAST_URL, EXCLUDE,
+                EXTEND, LANG, UNITS};
 
     use reqwest::Url;
 
@@ -875,15 +896,13 @@ mod tests {
     fn test_forecast_request_builder_defaults() {
         let request = ForecastRequestBuilder::new(API_KEY, LAT, LONG).build();
 
-        let expected_url = Url::parse(
-            &format!(
-                "{base}/{key}/{lat:.16},{long:.16}?",
-                base=FORECAST_URL,
-                key=API_KEY,
-                lat=LAT,
-                long=LONG
-            )
-        ).unwrap();
+        let expected_url = Url::parse(&format!(
+            "{base}/{key}/{lat:.16},{long:.16}?",
+            base = FORECAST_URL,
+            key = API_KEY,
+            lat = LAT,
+            long = LONG
+        )).unwrap();
 
         let expected = ForecastRequest::new(
             API_KEY,
@@ -893,7 +912,7 @@ mod tests {
             Vec::new(),
             None,
             None,
-            None
+            None,
         );
 
         assert_eq!(expected.api_key, request.api_key);
@@ -921,15 +940,13 @@ mod tests {
             .build();
 
         let expected_url = {
-            let mut url = Url::parse(
-                &format!(
-                    "{base}/{key}/{lat:.16},{long:.16}",
-                    base=FORECAST_URL,
-                    key=API_KEY,
-                    lat=LAT,
-                    long=LONG
-                )
-            ).unwrap();
+            let mut url = Url::parse(&format!(
+                "{base}/{key}/{lat:.16},{long:.16}",
+                base = FORECAST_URL,
+                key = API_KEY,
+                lat = LAT,
+                long = LONG
+            )).unwrap();
 
             url.query_pairs_mut()
                 .append_pair(EXCLUDE, "hourly,daily,alerts")
@@ -945,10 +962,14 @@ mod tests {
             LAT,
             LONG,
             expected_url,
-            vec![ExcludeBlock::Hourly, ExcludeBlock::Daily, ExcludeBlock::Alerts],
+            vec![
+                ExcludeBlock::Hourly,
+                ExcludeBlock::Daily,
+                ExcludeBlock::Alerts,
+            ],
             Some(ExtendBy::Hourly),
             Some(Lang::Arabic),
-            Some(Units::Imperial)
+            Some(Units::Imperial),
         );
 
         assert_eq!(expected, request);
@@ -966,15 +987,13 @@ mod tests {
         builder = builder.units(Units::Imperial);
 
         let expected_url = {
-            let mut url = Url::parse(
-                &format!(
-                    "{base}/{key}/{lat:.16},{long:.16}",
-                    base=FORECAST_URL,
-                    key=API_KEY,
-                    lat=LAT,
-                    long=LONG
-                )
-            ).unwrap();
+            let mut url = Url::parse(&format!(
+                "{base}/{key}/{lat:.16},{long:.16}",
+                base = FORECAST_URL,
+                key = API_KEY,
+                lat = LAT,
+                long = LONG
+            )).unwrap();
 
             url.query_pairs_mut()
                 .append_pair(EXCLUDE, "hourly,daily,alerts")
@@ -990,10 +1009,14 @@ mod tests {
             LAT,
             LONG,
             expected_url,
-            vec![ExcludeBlock::Hourly, ExcludeBlock::Daily, ExcludeBlock::Alerts],
+            vec![
+                ExcludeBlock::Hourly,
+                ExcludeBlock::Daily,
+                ExcludeBlock::Alerts,
+            ],
             Some(ExtendBy::Hourly),
             Some(Lang::Arabic),
-            Some(Units::Imperial)
+            Some(Units::Imperial),
         );
 
         assert_eq!(expected, builder.build());
@@ -1003,16 +1026,14 @@ mod tests {
     fn test_time_machine_request_builder_defaults() {
         let request = TimeMachineRequestBuilder::new(API_KEY, LAT, LONG, TIME).build();
 
-        let expected_url = Url::parse(
-            &format!(
-                "{base}/{key}/{lat:.16},{long:.16},{time}?",
-                base=FORECAST_URL,
-                key=API_KEY,
-                lat=LAT,
-                long=LONG,
-                time=TIME
-            )
-        ).unwrap();
+        let expected_url = Url::parse(&format!(
+            "{base}/{key}/{lat:.16},{long:.16},{time}?",
+            base = FORECAST_URL,
+            key = API_KEY,
+            lat = LAT,
+            long = LONG,
+            time = TIME
+        )).unwrap();
 
         let expected = TimeMachineRequest::new(
             API_KEY,
@@ -1022,7 +1043,7 @@ mod tests {
             expected_url,
             Vec::new(),
             None,
-            None
+            None,
         );
 
         assert_eq!(expected.api_key, request.api_key);
@@ -1049,16 +1070,14 @@ mod tests {
             .build();
 
         let expected_url = {
-            let mut url = Url::parse(
-                &format!(
-                    "{base}/{key}/{lat:.16},{long:.16},{time}",
-                    base=FORECAST_URL,
-                    key=API_KEY,
-                    lat=LAT,
-                    long=LONG,
-                    time=TIME
-                )
-            ).unwrap();
+            let mut url = Url::parse(&format!(
+                "{base}/{key}/{lat:.16},{long:.16},{time}",
+                base = FORECAST_URL,
+                key = API_KEY,
+                lat = LAT,
+                long = LONG,
+                time = TIME
+            )).unwrap();
 
             url.query_pairs_mut()
                 .append_pair(EXCLUDE, "hourly,daily,alerts")
@@ -1074,9 +1093,13 @@ mod tests {
             LONG,
             TIME,
             expected_url,
-            vec![ExcludeBlock::Hourly, ExcludeBlock::Daily, ExcludeBlock::Alerts],
+            vec![
+                ExcludeBlock::Hourly,
+                ExcludeBlock::Daily,
+                ExcludeBlock::Alerts,
+            ],
             Some(Lang::Arabic),
-            Some(Units::Imperial)
+            Some(Units::Imperial),
         );
 
         assert_eq!(expected, request);
@@ -1093,16 +1116,14 @@ mod tests {
         builder = builder.units(Units::Imperial);
 
         let expected_url = {
-            let mut url = Url::parse(
-                &format!(
-                    "{base}/{key}/{lat:.16},{long:.16},{time}",
-                    base=FORECAST_URL,
-                    key=API_KEY,
-                    lat=LAT,
-                    long=LONG,
-                    time=TIME
-                )
-            ).unwrap();
+            let mut url = Url::parse(&format!(
+                "{base}/{key}/{lat:.16},{long:.16},{time}",
+                base = FORECAST_URL,
+                key = API_KEY,
+                lat = LAT,
+                long = LONG,
+                time = TIME
+            )).unwrap();
 
             url.query_pairs_mut()
                 .append_pair(EXCLUDE, "hourly,daily,alerts")
@@ -1118,9 +1139,13 @@ mod tests {
             LONG,
             TIME,
             expected_url,
-            vec![ExcludeBlock::Hourly, ExcludeBlock::Daily, ExcludeBlock::Alerts],
+            vec![
+                ExcludeBlock::Hourly,
+                ExcludeBlock::Daily,
+                ExcludeBlock::Alerts,
+            ],
             Some(Lang::Arabic),
-            Some(Units::Imperial)
+            Some(Units::Imperial),
         );
 
         assert_eq!(expected, builder.build());
