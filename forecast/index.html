@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,8 +28,9 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'></p><script>window.sidebarCurrent = {name: 'forecast', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate forecast</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'forecast', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
     <nav class="sub">
@@ -43,36 +44,36 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
+    <section id='main' class="content">
 <h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>forecast</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/forecast/lib.rs.html#15-1128' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/forecast/lib.rs.html#15-1213' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>This module exposes an SDK for interacting with the <a href="https://darksky.net/dev/docs/">Dark Sky
 API</a>.</p>
-
-<h1 id='overview' class='section-header'><a href='#overview'>Overview</a></h1>
+<h1 id="overview" class="section-header"><a href="#overview">Overview</a></h1>
 <p>The <code>ApiClient</code> is the main entrypoint. It exposes two methods for
 sending HTTP requests to the Dark Sky API:</p>
-
 <ol>
-<li><p><code>ApiClient::get_forecast(request: ForecastRequest)</code> makes an
+<li>
+<p><code>ApiClient::get_forecast(request: ForecastRequest)</code> makes an
 HTTP request against the API and returns a deserialized response
 containing a weather forecast given the current weather
-conditions.</p></li>
-<li><p><code>ApiClient::get_time_machine(request: TimeMachineRequest)</code>
+conditions.</p>
+</li>
+<li>
+<p><code>ApiClient::get_time_machine(request: TimeMachineRequest)</code>
 makes a request against the API and returns a deserialized
 response containing weather data corresponding to the <code>time</code>
-parameter in the <code>TimeMachineRequest</code>.</p></li>
+parameter in the <code>TimeMachineRequest</code>.</p>
+</li>
 </ol>
-
 <p>For your convenience, there are two builder objects
 <code>ForecastRequestBuilder</code> and <code>TimeMachineRequestBuilder</code> which you
 can use to construct <code>ForecastRequest</code> and <code>TimeMachineRequest</code>
 instances.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>The following example builds a <code>ForecastRequest</code> and a
 <code>TimeMachineRequest</code> and executes them against the API:</p>
 
@@ -93,7 +94,7 @@ instances.</p>
 <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api_key</span> <span class="op">=</span> <span class="string">&quot;my_dark_sky_api_key&quot;</span>; <span class="comment">// please don&#39;t actually hardcode your API key!</span>
 
-    <span class="kw">let</span> <span class="ident">reqwest_client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>().<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">reqwest_client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>();
     <span class="kw">let</span> <span class="ident">api_client</span> <span class="op">=</span> <span class="ident">ApiClient</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">reqwest_client</span>);
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">blocks</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>];
@@ -124,6 +125,7 @@ instances.</p>
                            <td class='docblock-short'>
                                 <p>Model object representing a severe weather warning issued by a government
 authority for the requested location.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -132,6 +134,7 @@ authority for the requested location.</p>
                            <td class='docblock-short'>
                                 <p>The ApiClient is a thin wrapper around a <code>reqwest::Client</code> which
 sends requests to the Forecast and Time Machine APIs.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -139,14 +142,16 @@ sends requests to the Forecast and Time Machine APIs.</p>
                                   title='struct forecast::ApiResponse'>ApiResponse</a></td>
                            <td class='docblock-short'>
                                 <p>Model object representing a Forecast or Time Machine API response.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.DataBlock.html"
                                   title='struct forecast::DataBlock'>DataBlock</a></td>
                            <td class='docblock-short'>
-                                <p>Model object representing the various weather phenomena ocurring over a
+                                <p>Model object representing the various weather phenomena occurring over a
 period of time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -154,8 +159,9 @@ period of time.</p>
                                   title='struct forecast::DataPoint'>DataPoint</a></td>
                            <td class='docblock-short'>
                                 <p>Model object containing various properties, each representing the average
-(unless otherwise specified) of a particular weather phenomenon ocurring
+(unless otherwise specified) of a particular weather phenomenon occurring
 during a period of time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -164,6 +170,7 @@ during a period of time.</p>
                            <td class='docblock-short'>
                                 <p>Model object representing a flag which contains miscellaneous metadata about
 a request.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -171,6 +178,7 @@ a request.</p>
                                   title='struct forecast::ForecastRequest'>ForecastRequest</a></td>
                            <td class='docblock-short'>
                                 <p>Model object representing a request to the Forecast API.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -178,6 +186,7 @@ a request.</p>
                                   title='struct forecast::ForecastRequestBuilder'>ForecastRequestBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>Builder object used to construct a ForecastRequest.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -185,6 +194,7 @@ a request.</p>
                                   title='struct forecast::TimeMachineRequest'>TimeMachineRequest</a></td>
                            <td class='docblock-short'>
                                 <p>Model object representing a request to the Time Machine API.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -192,6 +202,7 @@ a request.</p>
                                   title='struct forecast::TimeMachineRequestBuilder'>TimeMachineRequestBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>Builder object used to construct a TimeMachineRequest.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -200,6 +211,7 @@ a request.</p>
                                   title='enum forecast::ExcludeBlock'>ExcludeBlock</a></td>
                            <td class='docblock-short'>
                                 <p>Model object representing a DataBlock to exclude from the response.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -208,6 +220,7 @@ a request.</p>
                            <td class='docblock-short'>
                                 <p>When present in a request, this feature causes response data to be reported
 for 168 hours into the future instead of 48 hours.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -215,6 +228,7 @@ for 168 hours into the future instead of 48 hours.</p>
                                   title='enum forecast::Icon'>Icon</a></td>
                            <td class='docblock-short'>
                                 <p>Model object representing an icon for display.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -222,14 +236,24 @@ for 168 hours into the future instead of 48 hours.</p>
                                   title='enum forecast::Lang'>Lang</a></td>
                            <td class='docblock-short'>
                                 <p>Model object representing language.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.PrecipType.html"
                                   title='enum forecast::PrecipType'>PrecipType</a></td>
                            <td class='docblock-short'>
-                                <p>Model object representing the kind of precipitation ocurring at a particular
+                                <p>Model object representing the kind of precipitation occurring at a particular
 time.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.Severity.html"
+                                  title='enum forecast::Severity'>Severity</a></td>
+                           <td class='docblock-short'>
+                                <p>Model object representing an <code>Alert</code>s severity.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -237,6 +261,7 @@ time.</p>
                                   title='enum forecast::Units'>Units</a></td>
                            <td class='docblock-short'>
                                 <p>Model object representing measurement units.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -255,13 +280,15 @@ time.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
@@ -295,7 +322,6 @@ time.</p>
         window.rootPath = "../";
         window.currentCrate = "forecast";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

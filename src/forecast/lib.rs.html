@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -43,7 +44,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">   1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1171,8 +1172,93 @@
 <span id="1126">1126</span>
 <span id="1127">1127</span>
 <span id="1128">1128</span>
+<span id="1129">1129</span>
+<span id="1130">1130</span>
+<span id="1131">1131</span>
+<span id="1132">1132</span>
+<span id="1133">1133</span>
+<span id="1134">1134</span>
+<span id="1135">1135</span>
+<span id="1136">1136</span>
+<span id="1137">1137</span>
+<span id="1138">1138</span>
+<span id="1139">1139</span>
+<span id="1140">1140</span>
+<span id="1141">1141</span>
+<span id="1142">1142</span>
+<span id="1143">1143</span>
+<span id="1144">1144</span>
+<span id="1145">1145</span>
+<span id="1146">1146</span>
+<span id="1147">1147</span>
+<span id="1148">1148</span>
+<span id="1149">1149</span>
+<span id="1150">1150</span>
+<span id="1151">1151</span>
+<span id="1152">1152</span>
+<span id="1153">1153</span>
+<span id="1154">1154</span>
+<span id="1155">1155</span>
+<span id="1156">1156</span>
+<span id="1157">1157</span>
+<span id="1158">1158</span>
+<span id="1159">1159</span>
+<span id="1160">1160</span>
+<span id="1161">1161</span>
+<span id="1162">1162</span>
+<span id="1163">1163</span>
+<span id="1164">1164</span>
+<span id="1165">1165</span>
+<span id="1166">1166</span>
+<span id="1167">1167</span>
+<span id="1168">1168</span>
+<span id="1169">1169</span>
+<span id="1170">1170</span>
+<span id="1171">1171</span>
+<span id="1172">1172</span>
+<span id="1173">1173</span>
+<span id="1174">1174</span>
+<span id="1175">1175</span>
+<span id="1176">1176</span>
+<span id="1177">1177</span>
+<span id="1178">1178</span>
+<span id="1179">1179</span>
+<span id="1180">1180</span>
+<span id="1181">1181</span>
+<span id="1182">1182</span>
+<span id="1183">1183</span>
+<span id="1184">1184</span>
+<span id="1185">1185</span>
+<span id="1186">1186</span>
+<span id="1187">1187</span>
+<span id="1188">1188</span>
+<span id="1189">1189</span>
+<span id="1190">1190</span>
+<span id="1191">1191</span>
+<span id="1192">1192</span>
+<span id="1193">1193</span>
+<span id="1194">1194</span>
+<span id="1195">1195</span>
+<span id="1196">1196</span>
+<span id="1197">1197</span>
+<span id="1198">1198</span>
+<span id="1199">1199</span>
+<span id="1200">1200</span>
+<span id="1201">1201</span>
+<span id="1202">1202</span>
+<span id="1203">1203</span>
+<span id="1204">1204</span>
+<span id="1205">1205</span>
+<span id="1206">1206</span>
+<span id="1207">1207</span>
+<span id="1208">1208</span>
+<span id="1209">1209</span>
+<span id="1210">1210</span>
+<span id="1211">1211</span>
+<span id="1212">1212</span>
+<span id="1213">1213</span>
 </pre><pre class="rust ">
-<span class="comment">/*Copyright 2016-2017 Jesse C. Grillo
+<span class="comment">/*Copyright 2016-2018 Jesse C. Grillo
 
 Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
 you may not use this file except in compliance with the License.
@@ -1186,7 +1272,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://jgrillo.github.io/forecast-rs/&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://jgrillo.github.io/forecast-rs/&quot;</span>)]</span>
 
 <span class="doccomment">//! This module exposes an SDK for interacting with the [Dark Sky</span>
 <span class="doccomment">//! API](https://darksky.net/dev/docs/).</span>
@@ -1233,7 +1319,7 @@ limitations under the License.*/</span>
 <span class="doccomment">//! fn main() {</span>
 <span class="doccomment">//!     let api_key = &quot;my_dark_sky_api_key&quot;; // please don&#39;t actually hardcode your API key!</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!     let reqwest_client = Client::new().unwrap();</span>
+<span class="doccomment">//!     let reqwest_client = Client::new();</span>
 <span class="doccomment">//!     let api_client = ApiClient::new(&amp;reqwest_client);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let mut blocks = vec![ExcludeBlock::Daily, ExcludeBlock::Alerts];</span>
@@ -1273,8 +1359,8 @@ limitations under the License.*/</span>
 
 <span class="kw">use</span> <span class="ident">itertools</span>::<span class="ident">join</span>;
 
-<span class="kw">use</span> <span class="ident">reqwest</span>::{<span class="ident">Url</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">ApiResult</span>, <span class="ident">Error</span>, <span class="ident">UrlError</span>, <span class="ident">Client</span>,
-              <span class="ident">Response</span>, <span class="ident">IntoUrl</span>};
+<span class="kw">use</span> <span class="ident">reqwest</span>::{<span class="ident">Url</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">ApiResult</span>, <span class="ident">Client</span>, <span class="ident">Response</span>};
+<span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">header</span>::{<span class="ident">Encoding</span>, <span class="ident">AcceptEncoding</span>, <span class="ident">qitem</span>};
 
 <span class="comment">// constants</span>
 
@@ -1296,9 +1382,7 @@ limitations under the License.*/</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Construct a new ApiClient.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Client</span>) <span class="op">-&gt;</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">ApiClient</span> {
-            <span class="ident">client</span>: <span class="ident">client</span>
-        }
+        <span class="ident">ApiClient</span> { <span class="ident">client</span> }
     }
 
     <span class="doccomment">/// Send a [Forecast API](https://darksky.net/dev/docs/forecast)</span>
@@ -1310,7 +1394,9 @@ limitations under the License.*/</span>
     <span class="doccomment">/// `reqwest::Client.get(..)`, so it will return an error under the</span>
     <span class="doccomment">/// same conditions in which reqwest would.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_forecast</span>(<span class="self">self</span>, <span class="ident">request</span>: <span class="ident">ForecastRequest</span>) <span class="op">-&gt;</span> <span class="ident">ApiResult</span><span class="op">&lt;</span><span class="ident">Response</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get</span>(<span class="ident">request</span>).<span class="ident">send</span>()
+        <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get</span>(<span class="ident">request</span>.<span class="ident">url</span>)
+            .<span class="ident">header</span>(<span class="ident">AcceptEncoding</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="ident">Encoding</span>::<span class="ident">Gzip</span>)]))
+            .<span class="ident">send</span>()
     }
 
     <span class="doccomment">/// Send a [Time Machine</span>
@@ -1323,14 +1409,16 @@ limitations under the License.*/</span>
     <span class="doccomment">/// `reqwest::Client.get(..)`, so it will return an error under the</span>
     <span class="doccomment">/// same conditions in which reqwest would.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_time_machine</span>(<span class="self">self</span>, <span class="ident">request</span>: <span class="ident">TimeMachineRequest</span>) <span class="op">-&gt;</span> <span class="ident">ApiResult</span><span class="op">&lt;</span><span class="ident">Response</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get</span>(<span class="ident">request</span>).<span class="ident">send</span>()
+        <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get</span>(<span class="ident">request</span>.<span class="ident">url</span>)
+            .<span class="ident">header</span>(<span class="ident">AcceptEncoding</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="ident">Encoding</span>::<span class="ident">Gzip</span>)]))
+            .<span class="ident">send</span>()
     }
 }
 
 <span class="comment">// request model objects and their builders</span>
 
 <span class="doccomment">/// Model object representing a request to the Forecast API.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ForecastRequest</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="ident">api_key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
     <span class="ident">latitude</span>: <span class="ident">f64</span>,
@@ -1354,26 +1442,20 @@ limitations under the License.*/</span>
         <span class="ident">units</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Units</span><span class="op">&gt;</span>
     ) <span class="op">-&gt;</span> <span class="ident">ForecastRequest</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">ForecastRequest</span> {
-            <span class="ident">api_key</span>: <span class="ident">api_key</span>,
-            <span class="ident">latitude</span>: <span class="ident">latitude</span>,
-            <span class="ident">longitude</span>: <span class="ident">longitude</span>,
-            <span class="ident">url</span>: <span class="ident">url</span>,
-            <span class="ident">exclude</span>: <span class="ident">exclude</span>,
-            <span class="ident">extend</span>: <span class="ident">extend</span>,
-            <span class="ident">lang</span>: <span class="ident">lang</span>,
-            <span class="ident">units</span>: <span class="ident">units</span>
+            <span class="ident">api_key</span>,
+            <span class="ident">latitude</span>,
+            <span class="ident">longitude</span>,
+            <span class="ident">url</span>,
+            <span class="ident">exclude</span>,
+            <span class="ident">extend</span>,
+            <span class="ident">lang</span>,
+            <span class="ident">units</span>
         }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">IntoUrl</span> <span class="kw">for</span> <span class="ident">ForecastRequest</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_url</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Url</span>, <span class="ident">UrlError</span><span class="op">&gt;</span> {
-        <span class="prelude-ty">Result</span>::<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">url</span>)
-    }
-}
-
 <span class="doccomment">/// Builder object used to construct a ForecastRequest.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ForecastRequestBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="ident">api_key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
     <span class="ident">latitude</span>: <span class="ident">f64</span>,
@@ -1385,14 +1467,13 @@ limitations under the License.*/</span>
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ForecastRequestBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-
     <span class="doccomment">/// A Forecast API request is constructed with required params</span>
     <span class="doccomment">/// `api_key`, `latitude`, and `longitude`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">api_key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="ident">latitude</span>: <span class="ident">f64</span>, <span class="ident">longitude</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">ForecastRequestBuilder</span> {
         <span class="ident">ForecastRequestBuilder</span> {
-            <span class="ident">api_key</span>: <span class="ident">api_key</span>,
-            <span class="ident">latitude</span>: <span class="ident">latitude</span>,
-            <span class="ident">longitude</span>: <span class="ident">longitude</span>,
+            <span class="ident">api_key</span>,
+            <span class="ident">latitude</span>,
+            <span class="ident">longitude</span>,
             <span class="ident">exclude</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
             <span class="ident">extend</span>: <span class="prelude-val">None</span>,
             <span class="ident">lang</span>: <span class="prelude-val">None</span>,
@@ -1407,9 +1488,8 @@ limitations under the License.*/</span>
     }
 
     <span class="doccomment">/// Add multiple DataBlocks to exclude from the response.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exclude_blocks</span>(
-        <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">exclude_blocks</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ExcludeBlock</span><span class="op">&gt;</span>
-    ) <span class="op">-&gt;</span> <span class="ident">ForecastRequestBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exclude_blocks</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">exclude_blocks</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ExcludeBlock</span><span class="op">&gt;</span>)
+        <span class="op">-&gt;</span> <span class="ident">ForecastRequestBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">exclude</span>.<span class="ident">append</span>(<span class="ident">exclude_blocks</span>);
         <span class="self">self</span>
     }
@@ -1450,10 +1530,10 @@ limitations under the License.*/</span>
     <span class="kw">fn</span> <span class="ident">build_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Url</span> {
         <span class="kw">let</span> <span class="ident">url_string</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16}&quot;</span>,
-            <span class="ident">base</span><span class="op">=</span><span class="ident">FORECAST_URL</span>,
-            <span class="ident">key</span><span class="op">=</span><span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">api_key</span>,
-            <span class="ident">lat</span><span class="op">=</span><span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">latitude</span>,
-            <span class="ident">long</span><span class="op">=</span><span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">longitude</span>
+            <span class="ident">base</span> <span class="op">=</span> <span class="ident">FORECAST_URL</span>,
+            <span class="ident">key</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">api_key</span>,
+            <span class="ident">lat</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">latitude</span>,
+            <span class="ident">long</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">longitude</span>
         );
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="ident">url_string</span>).<span class="ident">unwrap</span>();
@@ -1503,7 +1583,7 @@ limitations under the License.*/</span>
 }
 
 <span class="doccomment">/// Model object representing a request to the Time Machine API.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TimeMachineRequest</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="ident">api_key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
     <span class="ident">latitude</span>: <span class="ident">f64</span>,
@@ -1527,26 +1607,20 @@ limitations under the License.*/</span>
         <span class="ident">units</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Units</span><span class="op">&gt;</span>
     ) <span class="op">-&gt;</span> <span class="ident">TimeMachineRequest</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">TimeMachineRequest</span> {
-            <span class="ident">api_key</span>: <span class="ident">api_key</span>,
-            <span class="ident">latitude</span>: <span class="ident">latitude</span>,
-            <span class="ident">longitude</span>: <span class="ident">longitude</span>,
-            <span class="ident">time</span>: <span class="ident">time</span>,
-            <span class="ident">url</span>: <span class="ident">url</span>,
-            <span class="ident">exclude</span>: <span class="ident">exclude</span>,
-            <span class="ident">lang</span>: <span class="ident">lang</span>,
-            <span class="ident">units</span>: <span class="ident">units</span>
+            <span class="ident">api_key</span>,
+            <span class="ident">latitude</span>,
+            <span class="ident">longitude</span>,
+            <span class="ident">time</span>,
+            <span class="ident">url</span>,
+            <span class="ident">exclude</span>,
+            <span class="ident">lang</span>,
+            <span class="ident">units</span>
         }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">IntoUrl</span> <span class="kw">for</span> <span class="ident">TimeMachineRequest</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_url</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Url</span>, <span class="ident">UrlError</span><span class="op">&gt;</span> {
-        <span class="prelude-ty">Result</span>::<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">url</span>)
-    }
-}
-
 <span class="doccomment">/// Builder object used to construct a TimeMachineRequest.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TimeMachineRequestBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="ident">api_key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
     <span class="ident">latitude</span>: <span class="ident">f64</span>,
@@ -1558,17 +1632,19 @@ limitations under the License.*/</span>
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TimeMachineRequestBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-
     <span class="doccomment">/// A Time Machine API request is constructed with required params</span>
     <span class="doccomment">/// `api_key`, `latitude`, `longitude`, and `time`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">api_key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="ident">latitude</span>: <span class="ident">f64</span>, <span class="ident">longitude</span>: <span class="ident">f64</span>, <span class="ident">time</span>: <span class="ident">u64</span>
+        <span class="ident">api_key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+        <span class="ident">latitude</span>: <span class="ident">f64</span>,
+        <span class="ident">longitude</span>: <span class="ident">f64</span>,
+        <span class="ident">time</span>: <span class="ident">u64</span>
     ) <span class="op">-&gt;</span> <span class="ident">TimeMachineRequestBuilder</span> {
         <span class="ident">TimeMachineRequestBuilder</span> {
-            <span class="ident">api_key</span>: <span class="ident">api_key</span>,
-            <span class="ident">latitude</span>: <span class="ident">latitude</span>,
-            <span class="ident">longitude</span>: <span class="ident">longitude</span>,
-            <span class="ident">time</span>: <span class="ident">time</span>,
+            <span class="ident">api_key</span>,
+            <span class="ident">latitude</span>,
+            <span class="ident">longitude</span>,
+            <span class="ident">time</span>,
             <span class="ident">exclude</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
             <span class="ident">lang</span>: <span class="prelude-val">None</span>,
             <span class="ident">units</span>: <span class="prelude-val">None</span>
@@ -1583,7 +1659,8 @@ limitations under the License.*/</span>
 
     <span class="doccomment">/// Add multiple DataBlocks to exclude from the response.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exclude_blocks</span>(
-        <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">exclude_blocks</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ExcludeBlock</span><span class="op">&gt;</span>
+        <span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">exclude_blocks</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ExcludeBlock</span><span class="op">&gt;</span>
     ) <span class="op">-&gt;</span> <span class="ident">TimeMachineRequestBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">exclude</span>.<span class="ident">append</span>(<span class="ident">exclude_blocks</span>);
         <span class="self">self</span>
@@ -1617,12 +1694,12 @@ limitations under the License.*/</span>
 
     <span class="kw">fn</span> <span class="ident">build_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Url</span> {
         <span class="kw">let</span> <span class="ident">url_string</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-           <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16},{time}&quot;</span>,
-            <span class="ident">base</span><span class="op">=</span><span class="ident">FORECAST_URL</span>,
-            <span class="ident">key</span><span class="op">=</span><span class="self">self</span>.<span class="ident">api_key</span>,
-            <span class="ident">lat</span><span class="op">=</span><span class="self">self</span>.<span class="ident">latitude</span>,
-            <span class="ident">long</span><span class="op">=</span><span class="self">self</span>.<span class="ident">longitude</span>,
-            <span class="ident">time</span><span class="op">=</span><span class="self">self</span>.<span class="ident">time</span>
+            <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16},{time}&quot;</span>,
+            <span class="ident">base</span> <span class="op">=</span> <span class="ident">FORECAST_URL</span>,
+            <span class="ident">key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_key</span>,
+            <span class="ident">lat</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">latitude</span>,
+            <span class="ident">long</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">longitude</span>,
+            <span class="ident">time</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">time</span>
         );
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="ident">url_string</span>).<span class="ident">unwrap</span>();
@@ -1639,7 +1716,7 @@ limitations under the License.*/</span>
                             <span class="ident">json</span>.<span class="ident">trim_matches</span>(<span class="string">&#39;&quot;&#39;</span>).<span class="ident">to_string</span>()
                         })
                         .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(),
-                    <span class="string">&quot;,&quot;</span>
+                    <span class="string">&quot;,&quot;</span>,
                 );
 
                 <span class="ident">query_pairs</span>.<span class="ident">append_pair</span>(<span class="ident">EXCLUDE</span>, <span class="kw-2">&amp;</span><span class="ident">excludes</span>);
@@ -1667,7 +1744,7 @@ limitations under the License.*/</span>
 <span class="comment">// data model objects</span>
 
 <span class="doccomment">/// Model object representing an icon for display.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Icon</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;clear-day&quot;</span>)]</span>
     <span class="ident">ClearDay</span>,
@@ -1709,9 +1786,9 @@ limitations under the License.*/</span>
     <span class="ident">Tornado</span>
 }
 
-<span class="doccomment">/// Model object representing the kind of precipitation ocurring at a particular</span>
+<span class="doccomment">/// Model object representing the kind of precipitation occurring at a particular</span>
 <span class="doccomment">/// time.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PrecipType</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;rain&quot;</span>)]</span>
     <span class="ident">Rain</span>,
@@ -1724,7 +1801,7 @@ limitations under the License.*/</span>
 }
 
 <span class="doccomment">/// Model object representing a DataBlock to exclude from the response.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ExcludeBlock</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;currently&quot;</span>)]</span>
     <span class="ident">Currently</span>,
@@ -1747,14 +1824,14 @@ limitations under the License.*/</span>
 
 <span class="doccomment">/// When present in a request, this feature causes response data to be reported</span>
 <span class="doccomment">/// for 168 hours into the future instead of 48 hours.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ExtendBy</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;hourly&quot;</span>)]</span>
     <span class="ident">Hourly</span>
 }
 
 <span class="doccomment">/// Model object representing language.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Lang</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;ar&quot;</span>)]</span>
     <span class="ident">Arabic</span>,
@@ -1765,11 +1842,20 @@ limitations under the License.*/</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;be&quot;</span>)]</span>
     <span class="ident">Belarusian</span>,
 
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;bg&quot;</span>)]</span>
+    <span class="ident">Bulgarian</span>,
+
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;bs&quot;</span>)]</span>
     <span class="ident">Bosnian</span>,
 
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;ca&quot;</span>)]</span>
+    <span class="ident">Catalan</span>,
+
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;cz&quot;</span>)]</span>
     <span class="ident">Czech</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;da&quot;</span>)]</span>
+    <span class="ident">Danish</span>,
 
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;de&quot;</span>)]</span>
     <span class="ident">German</span>,
@@ -1783,6 +1869,12 @@ limitations under the License.*/</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;es&quot;</span>)]</span>
     <span class="ident">Spanish</span>,
 
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;et&quot;</span>)]</span>
+    <span class="ident">Estonian</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;fi&quot;</span>)]</span>
+    <span class="ident">Finnish</span>,
+
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;fr&quot;</span>)]</span>
     <span class="ident">French</span>,
 
@@ -1795,11 +1887,17 @@ limitations under the License.*/</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;id&quot;</span>)]</span>
     <span class="ident">Indonesian</span>,
 
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;is&quot;</span>)]</span>
+    <span class="ident">Icelandic</span>,
+
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;it&quot;</span>)]</span>
     <span class="ident">Italian</span>,
 
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;is&quot;</span>)]</span>
-    <span class="ident">Icelandic</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;ja&quot;</span>)]</span>
+    <span class="ident">Japanese</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;ka&quot;</span>)]</span>
+    <span class="ident">Georgian</span>,
 
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;kw&quot;</span>)]</span>
     <span class="ident">Cornish</span>,
@@ -1814,13 +1912,19 @@ limitations under the License.*/</span>
     <span class="ident">Polish</span>,
 
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;pt&quot;</span>)]</span>
-    <span class="ident">Portugese</span>,
+    <span class="ident">Portuguese</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;ro&quot;</span>)]</span>
+    <span class="ident">Romanian</span>,
 
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;ru&quot;</span>)]</span>
     <span class="ident">Russian</span>,
 
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;sk&quot;</span>)]</span>
     <span class="ident">Slovak</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;sl&quot;</span>)]</span>
+    <span class="ident">Slovenian</span>,
 
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;sr&quot;</span>)]</span>
     <span class="ident">Serbian</span>,
@@ -1848,7 +1952,7 @@ limitations under the License.*/</span>
 }
 
 <span class="doccomment">/// Model object representing measurement units.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Units</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;auto&quot;</span>)]</span>
     <span class="ident">Auto</span>,
@@ -1866,23 +1970,52 @@ limitations under the License.*/</span>
     <span class="ident">SI</span>
 }
 
+<span class="doccomment">/// Model object representing an `Alert`s severity.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Severity</span> {
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;advisory&quot;</span>)]</span>
+    <span class="ident">Advisory</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;watch&quot;</span>)]</span>
+    <span class="ident">Watch</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;warning&quot;</span>)]</span>
+    <span class="ident">Warning</span>
+}
+
 <span class="doccomment">/// Model object containing various properties, each representing the average</span>
-<span class="doccomment">/// (unless otherwise specified) of a particular weather phenomenon ocurring</span>
+<span class="doccomment">/// (unless otherwise specified) of a particular weather phenomenon occurring</span>
 <span class="doccomment">/// during a period of time.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DataPoint</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperature&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">apparent_temperature</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperatureHigh&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">apparent_temperature_high</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperatureHighTime&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">apparent_temperature_high_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperatureLow&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">apparent_temperature_low</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperatureLowTime&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">apparent_temperature_low_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperatureMax&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">apparent_temperature_max</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperatureMaxTime&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">apparent_temperature_max_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperatureMin&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">apparent_temperature_min</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;apparentTemperatureMinTime&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">apparent_temperature_min_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
 
@@ -1937,32 +2070,60 @@ limitations under the License.*/</span>
 
     <span class="kw">pub</span> <span class="ident">temperature</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;temperatureHigh&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">temperature_high</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;temperatureHighTime&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">temperature_high_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;temperatureLow&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">temperature_low</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;temperatureLowTime&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">temperature_low_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;temperatureMax&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">temperature_max</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;temperatureMaxTime&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">temperature_max_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;temperatureMin&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">temperature_min</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;temperatureMinTime&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">temperature_min_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
 
     <span class="kw">pub</span> <span class="ident">time</span>: <span class="ident">u64</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;uvIndex&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">uv_index</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;uvIndexTime&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">uv_index_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
 
     <span class="kw">pub</span> <span class="ident">visibility</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
 
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;windBearing&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">wind_bearing</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
 
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;windGust&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">wind_gust</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;windGustTime&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">wind_gust_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
+
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;windSpeed&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">wind_speed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>
 }
 
-<span class="doccomment">/// Model object representing the various weather phenomena ocurring over a</span>
+<span class="doccomment">/// Model object representing the various weather phenomena occurring over a</span>
 <span class="doccomment">/// period of time.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DataBlock</span> {
     <span class="kw">pub</span> <span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">DataPoint</span><span class="op">&gt;</span>,
 
@@ -1973,26 +2134,29 @@ limitations under the License.*/</span>
 
 <span class="doccomment">/// Model object representing a severe weather warning issued by a government</span>
 <span class="doccomment">/// authority for the requested location.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Alert</span> {
     <span class="kw">pub</span> <span class="ident">description</span>: <span class="ident">String</span>,
 
     <span class="kw">pub</span> <span class="ident">expires</span>: <span class="ident">u64</span>,
 
+    <span class="kw">pub</span> <span class="ident">regions</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+
+    <span class="kw">pub</span> <span class="ident">severity</span>: <span class="ident">Severity</span>,
+
+    <span class="kw">pub</span> <span class="ident">time</span>: <span class="ident">u64</span>,
+
     <span class="kw">pub</span> <span class="ident">title</span>: <span class="ident">String</span>,
 
-    <span class="kw">pub</span> <span class="ident">uri</span>: <span class="ident">String</span>,
+    <span class="kw">pub</span> <span class="ident">uri</span>: <span class="ident">String</span>
 }
 
 <span class="doccomment">/// Model object representing a flag which contains miscellaneous metadata about</span>
 <span class="doccomment">/// a request.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Flags</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;darksky-unavailable&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">darksky_unavailable</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;metno-license&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">metno_license</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 
     <span class="kw">pub</span> <span class="ident">sources</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 
@@ -2000,7 +2164,7 @@ limitations under the License.*/</span>
 }
 
 <span class="doccomment">/// Model object representing a Forecast or Time Machine API response.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ApiResponse</span> {
     <span class="kw">pub</span> <span class="ident">latitude</span>: <span class="ident">f64</span>,
 
@@ -2008,7 +2172,8 @@ limitations under the License.*/</span>
 
     <span class="kw">pub</span> <span class="ident">timezone</span>: <span class="ident">String</span>,
 
-    <span class="kw">pub</span> <span class="ident">offset</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.0.0&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">offset</span>: <span class="ident">i64</span>,
 
     <span class="kw">pub</span> <span class="ident">currently</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DataPoint</span><span class="op">&gt;</span>,
 
@@ -2028,8 +2193,8 @@ limitations under the License.*/</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">ForecastRequestBuilder</span>, <span class="ident">ForecastRequest</span>, <span class="ident">TimeMachineRequestBuilder</span>,
-                <span class="ident">TimeMachineRequest</span>, <span class="ident">ExcludeBlock</span>, <span class="ident">Units</span>, <span class="ident">Lang</span>, <span class="ident">ExtendBy</span>, <span class="ident">FORECAST_URL</span>,
-                <span class="ident">EXCLUDE</span>, <span class="ident">EXTEND</span>, <span class="ident">LANG</span>, <span class="ident">UNITS</span>};
+                <span class="ident">TimeMachineRequest</span>, <span class="ident">ExcludeBlock</span>, <span class="ident">Units</span>, <span class="ident">Lang</span>, <span class="ident">ExtendBy</span>, <span class="ident">FORECAST_URL</span>, <span class="ident">EXCLUDE</span>,
+                <span class="ident">EXTEND</span>, <span class="ident">LANG</span>, <span class="ident">UNITS</span>};
 
     <span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">Url</span>;
 
@@ -2049,15 +2214,13 @@ limitations under the License.*/</span>
     <span class="kw">fn</span> <span class="ident">test_forecast_request_builder_defaults</span>() {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">ForecastRequestBuilder</span>::<span class="ident">new</span>(<span class="ident">API_KEY</span>, <span class="ident">LAT</span>, <span class="ident">LONG</span>).<span class="ident">build</span>();
 
-        <span class="kw">let</span> <span class="ident">expected_url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16}?&quot;</span>,
-                <span class="ident">base</span><span class="op">=</span><span class="ident">FORECAST_URL</span>,
-                <span class="ident">key</span><span class="op">=</span><span class="ident">API_KEY</span>,
-                <span class="ident">lat</span><span class="op">=</span><span class="ident">LAT</span>,
-                <span class="ident">long</span><span class="op">=</span><span class="ident">LONG</span>
-            )
-        ).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">expected_url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16}?&quot;</span>,
+            <span class="ident">base</span> <span class="op">=</span> <span class="ident">FORECAST_URL</span>,
+            <span class="ident">key</span> <span class="op">=</span> <span class="ident">API_KEY</span>,
+            <span class="ident">lat</span> <span class="op">=</span> <span class="ident">LAT</span>,
+            <span class="ident">long</span> <span class="op">=</span> <span class="ident">LONG</span>
+        )).<span class="ident">unwrap</span>();
 
         <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">ForecastRequest</span>::<span class="ident">new</span>(
             <span class="ident">API_KEY</span>,
@@ -2095,15 +2258,13 @@ limitations under the License.*/</span>
             .<span class="ident">build</span>();
 
         <span class="kw">let</span> <span class="ident">expected_url</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                    <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16}&quot;</span>,
-                    <span class="ident">base</span><span class="op">=</span><span class="ident">FORECAST_URL</span>,
-                    <span class="ident">key</span><span class="op">=</span><span class="ident">API_KEY</span>,
-                    <span class="ident">lat</span><span class="op">=</span><span class="ident">LAT</span>,
-                    <span class="ident">long</span><span class="op">=</span><span class="ident">LONG</span>
-                )
-            ).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+                <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16}&quot;</span>,
+                <span class="ident">base</span> <span class="op">=</span> <span class="ident">FORECAST_URL</span>,
+                <span class="ident">key</span> <span class="op">=</span> <span class="ident">API_KEY</span>,
+                <span class="ident">lat</span> <span class="op">=</span> <span class="ident">LAT</span>,
+                <span class="ident">long</span> <span class="op">=</span> <span class="ident">LONG</span>
+            )).<span class="ident">unwrap</span>();
 
             <span class="ident">url</span>.<span class="ident">query_pairs_mut</span>()
                 .<span class="ident">append_pair</span>(<span class="ident">EXCLUDE</span>, <span class="string">&quot;hourly,daily,alerts&quot;</span>)
@@ -2119,7 +2280,11 @@ limitations under the License.*/</span>
             <span class="ident">LAT</span>,
             <span class="ident">LONG</span>,
             <span class="ident">expected_url</span>,
-            <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">ExcludeBlock</span>::<span class="ident">Hourly</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>],
+            <span class="macro">vec</span><span class="macro">!</span>[
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Hourly</span>,
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>,
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>
+            ],
             <span class="prelude-val">Some</span>(<span class="ident">ExtendBy</span>::<span class="ident">Hourly</span>),
             <span class="prelude-val">Some</span>(<span class="ident">Lang</span>::<span class="ident">Arabic</span>),
             <span class="prelude-val">Some</span>(<span class="ident">Units</span>::<span class="ident">Imperial</span>)
@@ -2140,15 +2305,13 @@ limitations under the License.*/</span>
         <span class="ident">builder</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">units</span>(<span class="ident">Units</span>::<span class="ident">Imperial</span>);
 
         <span class="kw">let</span> <span class="ident">expected_url</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                    <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16}&quot;</span>,
-                    <span class="ident">base</span><span class="op">=</span><span class="ident">FORECAST_URL</span>,
-                    <span class="ident">key</span><span class="op">=</span><span class="ident">API_KEY</span>,
-                    <span class="ident">lat</span><span class="op">=</span><span class="ident">LAT</span>,
-                    <span class="ident">long</span><span class="op">=</span><span class="ident">LONG</span>
-                )
-            ).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+                <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16}&quot;</span>,
+                <span class="ident">base</span> <span class="op">=</span> <span class="ident">FORECAST_URL</span>,
+                <span class="ident">key</span> <span class="op">=</span> <span class="ident">API_KEY</span>,
+                <span class="ident">lat</span> <span class="op">=</span> <span class="ident">LAT</span>,
+                <span class="ident">long</span> <span class="op">=</span> <span class="ident">LONG</span>
+            )).<span class="ident">unwrap</span>();
 
             <span class="ident">url</span>.<span class="ident">query_pairs_mut</span>()
                 .<span class="ident">append_pair</span>(<span class="ident">EXCLUDE</span>, <span class="string">&quot;hourly,daily,alerts&quot;</span>)
@@ -2164,7 +2327,11 @@ limitations under the License.*/</span>
             <span class="ident">LAT</span>,
             <span class="ident">LONG</span>,
             <span class="ident">expected_url</span>,
-            <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">ExcludeBlock</span>::<span class="ident">Hourly</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>],
+            <span class="macro">vec</span><span class="macro">!</span>[
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Hourly</span>,
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>,
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>
+            ],
             <span class="prelude-val">Some</span>(<span class="ident">ExtendBy</span>::<span class="ident">Hourly</span>),
             <span class="prelude-val">Some</span>(<span class="ident">Lang</span>::<span class="ident">Arabic</span>),
             <span class="prelude-val">Some</span>(<span class="ident">Units</span>::<span class="ident">Imperial</span>)
@@ -2175,18 +2342,18 @@ limitations under the License.*/</span>
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_time_machine_request_builder_defaults</span>() {
-        <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">TimeMachineRequestBuilder</span>::<span class="ident">new</span>(<span class="ident">API_KEY</span>, <span class="ident">LAT</span>, <span class="ident">LONG</span>, <span class="ident">TIME</span>).<span class="ident">build</span>();
+        <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">TimeMachineRequestBuilder</span>::<span class="ident">new</span>(
+            <span class="ident">API_KEY</span>, <span class="ident">LAT</span>, <span class="ident">LONG</span>, <span class="ident">TIME</span>
+        ).<span class="ident">build</span>();
 
-        <span class="kw">let</span> <span class="ident">expected_url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16},{time}?&quot;</span>,
-                <span class="ident">base</span><span class="op">=</span><span class="ident">FORECAST_URL</span>,
-                <span class="ident">key</span><span class="op">=</span><span class="ident">API_KEY</span>,
-                <span class="ident">lat</span><span class="op">=</span><span class="ident">LAT</span>,
-                <span class="ident">long</span><span class="op">=</span><span class="ident">LONG</span>,
-                <span class="ident">time</span><span class="op">=</span><span class="ident">TIME</span>
-            )
-        ).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">expected_url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16},{time}?&quot;</span>,
+            <span class="ident">base</span> <span class="op">=</span> <span class="ident">FORECAST_URL</span>,
+            <span class="ident">key</span> <span class="op">=</span> <span class="ident">API_KEY</span>,
+            <span class="ident">lat</span> <span class="op">=</span> <span class="ident">LAT</span>,
+            <span class="ident">long</span> <span class="op">=</span> <span class="ident">LONG</span>,
+            <span class="ident">time</span> <span class="op">=</span> <span class="ident">TIME</span>
+        )).<span class="ident">unwrap</span>();
 
         <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">TimeMachineRequest</span>::<span class="ident">new</span>(
             <span class="ident">API_KEY</span>,
@@ -2223,16 +2390,14 @@ limitations under the License.*/</span>
             .<span class="ident">build</span>();
 
         <span class="kw">let</span> <span class="ident">expected_url</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                    <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16},{time}&quot;</span>,
-                    <span class="ident">base</span><span class="op">=</span><span class="ident">FORECAST_URL</span>,
-                    <span class="ident">key</span><span class="op">=</span><span class="ident">API_KEY</span>,
-                    <span class="ident">lat</span><span class="op">=</span><span class="ident">LAT</span>,
-                    <span class="ident">long</span><span class="op">=</span><span class="ident">LONG</span>,
-                    <span class="ident">time</span><span class="op">=</span><span class="ident">TIME</span>
-                )
-            ).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+                <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16},{time}&quot;</span>,
+                <span class="ident">base</span> <span class="op">=</span> <span class="ident">FORECAST_URL</span>,
+                <span class="ident">key</span> <span class="op">=</span> <span class="ident">API_KEY</span>,
+                <span class="ident">lat</span> <span class="op">=</span> <span class="ident">LAT</span>,
+                <span class="ident">long</span> <span class="op">=</span> <span class="ident">LONG</span>,
+                <span class="ident">time</span> <span class="op">=</span> <span class="ident">TIME</span>
+            )).<span class="ident">unwrap</span>();
 
             <span class="ident">url</span>.<span class="ident">query_pairs_mut</span>()
                 .<span class="ident">append_pair</span>(<span class="ident">EXCLUDE</span>, <span class="string">&quot;hourly,daily,alerts&quot;</span>)
@@ -2248,7 +2413,11 @@ limitations under the License.*/</span>
             <span class="ident">LONG</span>,
             <span class="ident">TIME</span>,
             <span class="ident">expected_url</span>,
-            <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">ExcludeBlock</span>::<span class="ident">Hourly</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>],
+            <span class="macro">vec</span><span class="macro">!</span>[
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Hourly</span>,
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>,
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>
+            ],
             <span class="prelude-val">Some</span>(<span class="ident">Lang</span>::<span class="ident">Arabic</span>),
             <span class="prelude-val">Some</span>(<span class="ident">Units</span>::<span class="ident">Imperial</span>)
         );
@@ -2267,16 +2436,14 @@ limitations under the License.*/</span>
         <span class="ident">builder</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">units</span>(<span class="ident">Units</span>::<span class="ident">Imperial</span>);
 
         <span class="kw">let</span> <span class="ident">expected_url</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(
-                <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                    <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16},{time}&quot;</span>,
-                    <span class="ident">base</span><span class="op">=</span><span class="ident">FORECAST_URL</span>,
-                    <span class="ident">key</span><span class="op">=</span><span class="ident">API_KEY</span>,
-                    <span class="ident">lat</span><span class="op">=</span><span class="ident">LAT</span>,
-                    <span class="ident">long</span><span class="op">=</span><span class="ident">LONG</span>,
-                    <span class="ident">time</span><span class="op">=</span><span class="ident">TIME</span>
-                )
-            ).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+                <span class="string">&quot;{base}/{key}/{lat:.16},{long:.16},{time}&quot;</span>,
+                <span class="ident">base</span> <span class="op">=</span> <span class="ident">FORECAST_URL</span>,
+                <span class="ident">key</span> <span class="op">=</span> <span class="ident">API_KEY</span>,
+                <span class="ident">lat</span> <span class="op">=</span> <span class="ident">LAT</span>,
+                <span class="ident">long</span> <span class="op">=</span> <span class="ident">LONG</span>,
+                <span class="ident">time</span> <span class="op">=</span> <span class="ident">TIME</span>
+            )).<span class="ident">unwrap</span>();
 
             <span class="ident">url</span>.<span class="ident">query_pairs_mut</span>()
                 .<span class="ident">append_pair</span>(<span class="ident">EXCLUDE</span>, <span class="string">&quot;hourly,daily,alerts&quot;</span>)
@@ -2292,7 +2459,11 @@ limitations under the License.*/</span>
             <span class="ident">LONG</span>,
             <span class="ident">TIME</span>,
             <span class="ident">expected_url</span>,
-            <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">ExcludeBlock</span>::<span class="ident">Hourly</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>, <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>],
+            <span class="macro">vec</span><span class="macro">!</span>[
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Hourly</span>,
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Daily</span>,
+                <span class="ident">ExcludeBlock</span>::<span class="ident">Alerts</span>
+            ],
             <span class="prelude-val">Some</span>(<span class="ident">Lang</span>::<span class="ident">Arabic</span>),
             <span class="prelude-val">Some</span>(<span class="ident">Units</span>::<span class="ident">Imperial</span>)
         );
@@ -2318,13 +2489,15 @@ limitations under the License.*/</span>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
@@ -2358,7 +2531,6 @@ limitations under the License.*/</span>
         window.rootPath = "../../";
         window.currentCrate = "forecast";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,8 +28,9 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='index.html'>forecast</a></p><script>window.sidebarCurrent = {name: 'ApiClient', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct ApiClient</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.get_forecast">get_forecast</a><a href="#method.get_time_machine">get_time_machine</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a></div></div><p class='location'><a href='index.html'>forecast</a></p><script>window.sidebarCurrent = {name: 'ApiClient', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <nav class="sub">
@@ -43,7 +44,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
+    <section id='main' class="content">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>forecast</a>::<wbr><a class="struct" href=''>ApiClient</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
@@ -51,29 +52,35 @@
                </span><a class='srclink' href='../src/forecast/lib.rs.html#118-120' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ApiClient&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>The ApiClient is a thin wrapper around a <code>reqwest::Client</code> which
 sends requests to the Forecast and Time Machine APIs.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#122-154' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(client: &amp;'a Client) -&gt; <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#122-156' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(client: &amp;'a <a class="struct" href="https://docs.rs/reqwest/0.8.3/reqwest/client/struct.Client.html" title="struct reqwest::client::Client">Client</a>) -&gt; <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#124-126' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Construct a new ApiClient.</p>
-</div><h4 id='method.get_forecast' class="method"><span id='get_forecast.v' class='invisible'><code>fn <a href='#method.get_forecast' class='fnname'>get_forecast</a>(self, request: <a class="struct" href="../forecast/struct.ForecastRequest.html" title="struct forecast::ForecastRequest">ForecastRequest</a>) -&gt; ApiResult&lt;Response&gt;</code></span></h4>
+</div><h4 id='method.get_forecast' class="method"><span id='get_forecast.v' class='invisible'><code>pub fn <a href='#method.get_forecast' class='fnname'>get_forecast</a>(self, request: <a class="struct" href="../forecast/struct.ForecastRequest.html" title="struct forecast::ForecastRequest">ForecastRequest</a>) -&gt; <a class="type" href="https://docs.rs/reqwest/0.8.3/reqwest/error/type.Result.html" title="type reqwest::error::Result">ApiResult</a>&lt;<a class="struct" href="https://docs.rs/reqwest/0.8.3/reqwest/response/struct.Response.html" title="struct reqwest::response::Response">Response</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#136-140' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Send a <a href="https://darksky.net/dev/docs/forecast">Forecast API</a>
 request, returns the corresponding Response.</p>
-
-<h1 id='errors' class='section-header'><a href='#errors'>Errors</a></h1>
+<h1 id="errors" class="section-header"><a href="#errors">Errors</a></h1>
 <p>This function is a thin wrapper around
 <code>reqwest::Client.get(..)</code>, so it will return an error under the
 same conditions in which reqwest would.</p>
-</div><h4 id='method.get_time_machine' class="method"><span id='get_time_machine.v' class='invisible'><code>fn <a href='#method.get_time_machine' class='fnname'>get_time_machine</a>(self, request: <a class="struct" href="../forecast/struct.TimeMachineRequest.html" title="struct forecast::TimeMachineRequest">TimeMachineRequest</a>) -&gt; ApiResult&lt;Response&gt;</code></span></h4>
+</div><h4 id='method.get_time_machine' class="method"><span id='get_time_machine.v' class='invisible'><code>pub fn <a href='#method.get_time_machine' class='fnname'>get_time_machine</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;request: <a class="struct" href="../forecast/struct.TimeMachineRequest.html" title="struct forecast::TimeMachineRequest">TimeMachineRequest</a><br>) -&gt; <a class="type" href="https://docs.rs/reqwest/0.8.3/reqwest/error/type.Result.html" title="type reqwest::error::Result">ApiResult</a>&lt;<a class="struct" href="https://docs.rs/reqwest/0.8.3/reqwest/response/struct.Response.html" title="struct reqwest::response::Response">Response</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#151-155' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Send a <a href="https://darksky.net/dev/docs/time-machine">Time Machine
 API</a> request,
 returns the corresponding Response.</p>
-
-<h1 id='errors-1' class='section-header'><a href='#errors-1'>Errors</a></h1>
+<h1 id="errors-1" class="section-header"><a href="#errors-1">Errors</a></h1>
 <p>This function is a thin wrapper around
 <code>reqwest::Client.get(..)</code>, so it will return an error under the
 same conditions in which reqwest would.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#117' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../forecast/struct.ApiClient.html" title="struct forecast::ApiClient">ApiClient</a>&lt;'a&gt;</code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#117' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/forecast/lib.rs.html#117' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -91,13 +98,15 @@ same conditions in which reqwest would.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
@@ -131,7 +140,6 @@ same conditions in which reqwest would.</p>
         window.rootPath = "../";
         window.currentCrate = "forecast";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>
