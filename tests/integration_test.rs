@@ -22,6 +22,7 @@ extern crate forecast;
 use std::error::Error;
 use std::fs::File;
 use std::path::{PathBuf, Path};
+use std::time::Duration;
 
 use reqwest::{Client, StatusCode};
 
@@ -34,6 +35,8 @@ use forecast::{ApiResponse, ApiClient, ForecastRequestBuilder,
 const LAT: f64 = 42.3736;
 const LONG: f64 = -71.1097;
 const TIME: u64 = 1505899999;
+
+const TIMEOUT_SECS: u64 = 60;
 
 // tests for serde models
 
@@ -84,7 +87,11 @@ fn test_response_serde_01_21_2018() {
 fn test_get_forecast_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let reqwest_client = Client::new();
+    let reqwest_client = Client::builder()
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
+        .build()
+        .unwrap();
+
     let api_client = ApiClient::new(&reqwest_client);
 
     let forecast_request = ForecastRequestBuilder::new(api_key, LAT, LONG).build();
@@ -109,7 +116,11 @@ fn test_get_forecast_request_default() {
 fn test_get_forecast_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let reqwest_client = Client::new();
+    let reqwest_client = Client::builder()
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
+        .build()
+        .unwrap();
+
     let api_client = ApiClient::new(&reqwest_client);
 
     let mut blocks = vec![ExcludeBlock::Alerts];
@@ -143,7 +154,11 @@ fn test_get_forecast_request_full() {
 fn test_get_time_machine_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let reqwest_client = Client::new();
+    let reqwest_client = Client::builder()
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
+        .build()
+        .unwrap();
+
     let api_client = ApiClient::new(&reqwest_client);
 
     let time_machine_request = TimeMachineRequestBuilder::new(
@@ -170,7 +185,11 @@ fn test_get_time_machine_request_default() {
 fn test_get_time_machine_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
-    let reqwest_client = Client::new();
+    let reqwest_client = Client::builder()
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
+        .build()
+        .unwrap();
+
     let api_client = ApiClient::new(&reqwest_client);
 
     let mut blocks = vec![ExcludeBlock::Daily];
