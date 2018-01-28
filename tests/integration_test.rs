@@ -88,7 +88,6 @@ fn test_get_forecast_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
-        .gzip(true)
         .timeout(TIMEOUT)
         .build()
         .unwrap();
@@ -118,7 +117,6 @@ fn test_get_forecast_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
-        .gzip(true)
         .timeout(TIMEOUT)
         .build()
         .unwrap();
@@ -157,7 +155,6 @@ fn test_get_time_machine_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
-        .gzip(true)
         .timeout(TIMEOUT)
         .build()
         .unwrap();
@@ -189,7 +186,6 @@ fn test_get_time_machine_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
-        .gzip(true)
         .timeout(TIMEOUT)
         .build()
         .unwrap();
