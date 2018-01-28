@@ -7,3 +7,7 @@ matrix:
   allow_failures:
     - rust: nightly
 script: cargo test --features integration
+notifications:
+  email:
+    - jesse.grillo@gmail.com
+  on_failure: always
