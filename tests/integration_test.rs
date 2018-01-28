@@ -36,7 +36,7 @@ const LAT: f64 = 42.3736;
 const LONG: f64 = -71.1097;
 const TIME: u64 = 1505899999;
 
-const TIMEOUT: Duration = Duration::from_secs(60);
+const TIMEOUT_SECS: u64 = 60;
 
 // tests for serde models
 
@@ -88,7 +88,7 @@ fn test_get_forecast_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
-        .timeout(TIMEOUT)
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
         .build()
         .unwrap();
 
@@ -117,7 +117,7 @@ fn test_get_forecast_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
-        .timeout(TIMEOUT)
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
         .build()
         .unwrap();
 
@@ -155,7 +155,7 @@ fn test_get_time_machine_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
-        .timeout(TIMEOUT)
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
         .build()
         .unwrap();
 
@@ -186,7 +186,7 @@ fn test_get_time_machine_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
-        .timeout(TIMEOUT)
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
         .build()
         .unwrap();
 
