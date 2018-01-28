@@ -36,7 +36,7 @@ const LAT: f64 = 42.3736;
 const LONG: f64 = -71.1097;
 const TIME: u64 = 1505899999;
 
-const TIMEOUT: Duration = Duration::from_secs(10);
+const TIMEOUT: Duration = Duration::from_secs(60);
 
 // tests for serde models
 
