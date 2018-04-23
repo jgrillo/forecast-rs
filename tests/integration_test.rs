@@ -151,6 +151,44 @@ fn test_get_forecast_request_full() {
 
 #[test]
 #[cfg(feature = "integration")]
+fn test_get_forecast_request_full_asref() {
+    let api_key = env!("FORECAST_API_KEY");
+
+    let reqwest_client = Client::builder()
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
+        .build()
+        .unwrap();
+
+    let api_client = ApiClient::new(&reqwest_client);
+
+    let mut blocks = vec![ExcludeBlock::Alerts];
+
+    let forecast_request = ForecastRequestBuilder::new(api_key, LAT, LONG)
+        .exclude_block(ExcludeBlock::Flags)
+        .exclude_blocks(&mut blocks)
+        .extend(ExtendBy::Hourly)
+        .lang(Lang::Swedish)
+        .units(Units::SI)
+        .build();
+
+    let response = api_client.get_forecast(&forecast_request).unwrap();
+    response.headers();
+    let status = response.status();
+
+    assert_eq!(status, StatusCode::Ok);
+
+    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+
+    assert_eq!(api_response.latitude, LAT);
+    assert_eq!(api_response.longitude, LONG);
+
+    // Use the following invocation to display the JSON response:
+    // FORECAST_API_KEY=$YOUR_FORECAST_API_KEY cargo test --features integration -- --nocapture
+    println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
+}
+
+#[test]
+#[cfg(feature = "integration")]
 fn test_get_time_machine_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
@@ -204,6 +242,37 @@ fn test_get_time_machine_request_full() {
         .build();
 
     let response = api_client.get_time_machine(time_machine_request).unwrap();
+    let status = response.status();
+
+    assert_eq!(status, StatusCode::Ok);
+
+    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+
+    assert_eq!(api_response.latitude, LAT);
+    assert_eq!(api_response.longitude, LONG);
+
+    // Use the following invocation to display the JSON response:
+    // FORECAST_API_KEY=$YOUR_FORECAST_API_KEY cargo test --features integration -- --nocapture
+    println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
+}
+
+#[test]
+#[cfg(feature = "integration")]
+fn test_get_time_machine_request_default_asref() {
+    let api_key = env!("FORECAST_API_KEY");
+
+    let reqwest_client = Client::builder()
+        .timeout(Duration::from_secs(TIMEOUT_SECS))
+        .build()
+        .unwrap();
+
+    let api_client = ApiClient::new(&reqwest_client);
+
+    let time_machine_request = TimeMachineRequestBuilder::new(
+        api_key, LAT, LONG, TIME
+    ).build();
+
+    let response = api_client.get_time_machine(&time_machine_request).unwrap();
     let status = response.status();
 
     assert_eq!(status, StatusCode::Ok);
