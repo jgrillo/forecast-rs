@@ -95,6 +95,7 @@ extern crate itertools;
 extern crate reqwest;
 
 use std::vec::Vec;
+use std::borrow::Borrow;
 use std::option::Option;
 
 use itertools::join;
@@ -133,8 +134,9 @@ impl<'a> ApiClient<'a> {
     /// This function is a thin wrapper around
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
-    pub fn get_forecast(self, request: ForecastRequest) -> ApiResult<Response> {
-        self.client.get(request.url)
+    pub fn get_forecast<'b, T>(&self, request: T) -> ApiResult<Response>
+        where T : Borrow<ForecastRequest<'b>> + Sized {
+        self.client.get(request.borrow().url.clone())
             .header(AcceptEncoding(vec![qitem(Encoding::Gzip)]))
             .send()
     }
@@ -148,8 +150,9 @@ impl<'a> ApiClient<'a> {
     /// This function is a thin wrapper around
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
-    pub fn get_time_machine(self, request: TimeMachineRequest) -> ApiResult<Response> {
-        self.client.get(request.url)
+    pub fn get_time_machine<'b, T>(&self, request: T) -> ApiResult<Response>
+        where T : Borrow<TimeMachineRequest<'b>> + Sized {
+        self.client.get(request.borrow().url.clone())
             .header(AcceptEncoding(vec![qitem(Encoding::Gzip)]))
             .send()
     }
