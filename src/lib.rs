@@ -98,6 +98,9 @@ use std::vec::Vec;
 use std::borrow::Borrow;
 use std::option::Option;
 
+use serde::de::{Deserialize, Deserializer, IntoDeserializer};
+use serde::ser::{Serialize, Serializer};
+
 use itertools::join;
 
 use reqwest::{Url, Result as ApiResult, Client, Response};
@@ -575,6 +578,7 @@ pub enum ExtendBy {
 
 /// Model object representing language.
 #[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
+#[serde(remote = "Lang")]
 pub enum Lang {
     #[serde(rename = "ar")]
     Arabic,
@@ -642,9 +646,13 @@ pub enum Lang {
     #[serde(rename = "ka")]
     Georgian,
 
+    #[serde(rename = "ko")]
+    Korean,
+
     #[serde(rename = "kw")]
     Cornish,
 
+    // can also be deserialized from "no", but will always be serialized to "nb"
     #[serde(rename = "nb")]
     NorwegianBokmal,
 
@@ -694,6 +702,32 @@ pub enum Lang {
     TraditionalChinese
 }
 
+// This is needed to take into account the aliasing of "nb" as "no".
+// See https://github.com/serde-rs/serde/issues/1174#issuecomment-372411280
+impl <'de> Deserialize<'de> for Lang {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+        where D: Deserializer<'de>
+    {
+        let value = String::deserialize(deserializer)?;
+
+        if value == "no" {
+            Ok(Lang::NorwegianBokmal)
+        } else {
+            Lang::deserialize(value.into_deserializer())
+        }
+    }
+}
+
+// This is needed to take into account the aliasing of "nb" as "no".
+// See https://github.com/serde-rs/serde/issues/1174#issuecomment-372411280
+impl Serialize for Lang {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where S: Serializer
+    {
+        Lang::serialize(&self, serializer)
+    }
+}
+
 /// Model object representing measurement units.
 #[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum Units {
@@ -713,7 +747,7 @@ pub enum Units {
     SI
 }
 
-/// Model object representing an `Alert`s severity.
+/// Model object representing an Alert's severity.
 #[derive(Serialize, Deserialize, Clone, PartialEq, Eq, Debug)]
 pub enum Severity {
     #[serde(rename = "advisory")]
@@ -940,6 +974,8 @@ mod tests {
                 EXTEND, LANG, UNITS};
 
     use reqwest::Url;
+
+    use serde_json;
 
     use std::vec::Vec;
 
@@ -1212,5 +1248,35 @@ mod tests {
         );
 
         assert_eq!(expected, builder.build());
+    }
+
+    // Test that we can deserialize and serialize both variants "nb" and "no"
+    #[test]
+    fn test_norwegian_lang_serde() {
+
+        #[derive(Serialize, Deserialize, PartialEq, Debug)]
+        struct TestStruct {
+            no: Lang,
+            nb: Lang,
+            en: Lang
+        }
+
+        let test_json = "{\"nb\":\"nb\",\"no\":\"no\",\"en\":\"en\"}";
+
+        let test_struct: TestStruct = serde_json::from_str(test_json).unwrap();
+
+        assert_eq!(test_struct.nb, Lang::NorwegianBokmal);
+        assert_eq!(test_struct.no, Lang::NorwegianBokmal);
+        assert_eq!(test_struct.en, Lang::English);
+
+        let test_struct_serialized = serde_json::to_string(&test_struct).unwrap();
+
+        let test_struct_deserialized: TestStruct = serde_json::from_str(
+            test_struct_serialized.as_str()
+        ).unwrap();
+
+        assert_eq!(test_struct_deserialized.nb, Lang::NorwegianBokmal);
+        assert_eq!(test_struct_deserialized.no, Lang::NorwegianBokmal);
+        assert_eq!(test_struct_deserialized.en, Lang::English);
     }
 }
