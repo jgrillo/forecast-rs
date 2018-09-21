@@ -104,7 +104,6 @@ use serde::ser::{Serialize, Serializer};
 use itertools::join;
 
 use reqwest::{Url, Result as ApiResult, Client, Response};
-use reqwest::header::{Encoding, AcceptEncoding, qitem};
 
 // constants
 
@@ -140,7 +139,7 @@ impl<'a> ApiClient<'a> {
     pub fn get_forecast<'b, T>(&self, request: T) -> ApiResult<Response>
         where T : Borrow<ForecastRequest<'b>> + Sized {
         self.client.get(request.borrow().url.clone())
-            .header(AcceptEncoding(vec![qitem(Encoding::Gzip)]))
+            .header("Accept-Encoding", "gzip")
             .send()
     }
 
@@ -156,7 +155,7 @@ impl<'a> ApiClient<'a> {
     pub fn get_time_machine<'b, T>(&self, request: T) -> ApiResult<Response>
         where T : Borrow<TimeMachineRequest<'b>> + Sized {
         self.client.get(request.borrow().url.clone())
-            .header(AcceptEncoding(vec![qitem(Encoding::Gzip)]))
+            .header("Accept-Encoding", "gzip")
             .send()
     }
 }
