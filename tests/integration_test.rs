@@ -99,7 +99,7 @@ fn test_get_forecast_request_default() {
     let response = api_client.get_forecast(forecast_request).unwrap();
     let status = response.status();
 
-    assert_eq!(status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::OK);
 
     let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
 
@@ -137,7 +137,7 @@ fn test_get_forecast_request_full() {
     response.headers();
     let status = response.status();
 
-    assert_eq!(status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::OK);
 
     let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
 
@@ -175,7 +175,7 @@ fn test_get_forecast_request_full_asref() {
     response.headers();
     let status = response.status();
 
-    assert_eq!(status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::OK);
 
     let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
 
@@ -206,7 +206,7 @@ fn test_get_time_machine_request_default() {
     let response = api_client.get_time_machine(time_machine_request).unwrap();
     let status = response.status();
 
-    assert_eq!(status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::OK);
 
     let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
 
@@ -244,7 +244,7 @@ fn test_get_time_machine_request_full() {
     let response = api_client.get_time_machine(time_machine_request).unwrap();
     let status = response.status();
 
-    assert_eq!(status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::OK);
 
     let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
 
@@ -275,7 +275,7 @@ fn test_get_time_machine_request_default_asref() {
     let response = api_client.get_time_machine(&time_machine_request).unwrap();
     let status = response.status();
 
-    assert_eq!(status, StatusCode::Ok);
+    assert_eq!(status, StatusCode::OK);
 
     let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
 
