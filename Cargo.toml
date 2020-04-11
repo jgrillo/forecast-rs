@@ -6,7 +6,7 @@ license = "Apache-2.0"
 documentation = "https://jgrillo.github.io/forecast-rs/"
 repository = "https://github.com/jgrillo/forecast-rs"
 keywords = ["forecast", "weather", "darksky"]
-version = "2.0.0"
+version = "3.0.0"
 authors = ["Jesse C. Grillo <jesse.grillo@gmail.com>"]
 edition = "2018"
 
