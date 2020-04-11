@@ -12,14 +12,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-extern crate serde;
-extern crate serde_json;
-
-extern crate reqwest;
-
-extern crate forecast;
-
-use std::error::Error;
 use std::fs::File;
 use std::path::{PathBuf, Path};
 use std::time::Duration;
@@ -42,7 +34,7 @@ const TIMEOUT_SECS: u64 = 60;
 
 fn test_response_serde(path: &Path) {
     let file = match File::open(&path) {
-        Err(reason) => panic!("couldn't open {}: {}", path.display(), reason.description()),
+        Err(reason) => panic!("couldn't open {}: {}", path.display(), reason),
         Ok(file) => file
     };
 
@@ -82,9 +74,9 @@ fn test_response_serde_01_21_2018() {
 //
 // FORECAST_API_KEY=$YOUR_FORECAST_API_KEY cargo test --features integration
 
-#[test]
+#[tokio::test]
 #[cfg(feature = "integration")]
-fn test_get_forecast_request_default() {
+async fn test_get_forecast_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
@@ -96,12 +88,12 @@ fn test_get_forecast_request_default() {
 
     let forecast_request = ForecastRequestBuilder::new(api_key, LAT, LONG).build();
 
-    let response = api_client.get_forecast(forecast_request).unwrap();
+    let response = api_client.get_forecast(forecast_request).await.unwrap();
     let status = response.status();
 
     assert_eq!(status, StatusCode::OK);
 
-    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+    let api_response: ApiResponse = serde_json::from_str(&response.text().await.unwrap()).unwrap();
 
     assert_eq!(api_response.latitude, LAT);
     assert_eq!(api_response.longitude, LONG);
@@ -111,9 +103,9 @@ fn test_get_forecast_request_default() {
     println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
 
-#[test]
+#[tokio::test]
 #[cfg(feature = "integration")]
-fn test_get_forecast_request_full() {
+async fn test_get_forecast_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
@@ -133,13 +125,13 @@ fn test_get_forecast_request_full() {
         .units(Units::SI)
         .build();
 
-    let response = api_client.get_forecast(forecast_request).unwrap();
+    let response = api_client.get_forecast(forecast_request).await.unwrap();
     response.headers();
     let status = response.status();
 
     assert_eq!(status, StatusCode::OK);
 
-    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+    let api_response: ApiResponse = serde_json::from_str(&response.text().await.unwrap()).unwrap();
 
     assert_eq!(api_response.latitude, LAT);
     assert_eq!(api_response.longitude, LONG);
@@ -149,9 +141,9 @@ fn test_get_forecast_request_full() {
     println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
 
-#[test]
+#[tokio::test]
 #[cfg(feature = "integration")]
-fn test_get_forecast_request_full_asref() {
+async fn test_get_forecast_request_full_asref() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
@@ -171,13 +163,13 @@ fn test_get_forecast_request_full_asref() {
         .units(Units::SI)
         .build();
 
-    let response = api_client.get_forecast(&forecast_request).unwrap();
+    let response = api_client.get_forecast(&forecast_request).await.unwrap();
     response.headers();
     let status = response.status();
 
     assert_eq!(status, StatusCode::OK);
 
-    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+    let api_response: ApiResponse = serde_json::from_str(&response.text().await.unwrap()).unwrap();
 
     assert_eq!(api_response.latitude, LAT);
     assert_eq!(api_response.longitude, LONG);
@@ -187,9 +179,9 @@ fn test_get_forecast_request_full_asref() {
     println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
 
-#[test]
+#[tokio::test]
 #[cfg(feature = "integration")]
-fn test_get_time_machine_request_default() {
+async fn test_get_time_machine_request_default() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
@@ -203,12 +195,12 @@ fn test_get_time_machine_request_default() {
         api_key, LAT, LONG, TIME
     ).build();
 
-    let response = api_client.get_time_machine(time_machine_request).unwrap();
+    let response = api_client.get_time_machine(time_machine_request).await.unwrap();
     let status = response.status();
 
     assert_eq!(status, StatusCode::OK);
 
-    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+    let api_response: ApiResponse = serde_json::from_str(&response.text().await.unwrap()).unwrap();
 
     assert_eq!(api_response.latitude, LAT);
     assert_eq!(api_response.longitude, LONG);
@@ -218,9 +210,9 @@ fn test_get_time_machine_request_default() {
     println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
 
-#[test]
+#[tokio::test]
 #[cfg(feature = "integration")]
-fn test_get_time_machine_request_full() {
+async fn test_get_time_machine_request_full() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
@@ -241,12 +233,12 @@ fn test_get_time_machine_request_full() {
         .units(Units::SI)
         .build();
 
-    let response = api_client.get_time_machine(time_machine_request).unwrap();
+    let response = api_client.get_time_machine(time_machine_request).await.unwrap();
     let status = response.status();
 
     assert_eq!(status, StatusCode::OK);
 
-    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+    let api_response: ApiResponse = serde_json::from_str(&response.text().await.unwrap()).unwrap();
 
     assert_eq!(api_response.latitude, LAT);
     assert_eq!(api_response.longitude, LONG);
@@ -256,9 +248,9 @@ fn test_get_time_machine_request_full() {
     println!("{}", serde_json::to_string_pretty(&api_response).unwrap());
 }
 
-#[test]
+#[tokio::test]
 #[cfg(feature = "integration")]
-fn test_get_time_machine_request_default_asref() {
+async fn test_get_time_machine_request_default_asref() {
     let api_key = env!("FORECAST_API_KEY");
 
     let reqwest_client = Client::builder()
@@ -272,12 +264,12 @@ fn test_get_time_machine_request_default_asref() {
         api_key, LAT, LONG, TIME
     ).build();
 
-    let response = api_client.get_time_machine(&time_machine_request).unwrap();
+    let response = api_client.get_time_machine(&time_machine_request).await.unwrap();
     let status = response.status();
 
     assert_eq!(status, StatusCode::OK);
 
-    let api_response: ApiResponse = serde_json::from_reader(response).unwrap();
+    let api_response: ApiResponse = serde_json::from_str(&response.text().await.unwrap()).unwrap();
 
     assert_eq!(api_response.latitude, LAT);
     assert_eq!(api_response.longitude, LONG);

@@ -43,9 +43,6 @@ limitations under the License.*/
 //! `TimeMachineRequest` and executes them against the API:
 //!
 //! ```
-//! extern crate reqwest;
-//! extern crate forecast;
-//!
 //! use reqwest::Client;
 //!
 //! use forecast::{ApiResponse, ApiClient, ForecastRequestBuilder,
@@ -79,20 +76,13 @@ limitations under the License.*/
 //!         .units(Units::Imperial)
 //!         .build();
 //!
-//!     // let forecast_response = api_client.get_forecast(forecast_request).unwrap();
-//!     // let time_machine_response = api_client.get_time_machine(time_machine_request).unwrap();
+//!     // let forecast_response = api_client.get_forecast(forecast_request).await.unwrap();
+//!     // let time_machine_response = api_client.get_time_machine(time_machine_request).await.unwrap();
 //! }
 //! ```
 
 #[macro_use]
 extern crate serde_derive;
-
-extern crate serde;
-extern crate serde_json;
-
-extern crate itertools;
-
-extern crate reqwest;
 
 use std::vec::Vec;
 use std::borrow::Borrow;
@@ -136,11 +126,10 @@ impl<'a> ApiClient<'a> {
     /// This function is a thin wrapper around
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
-    pub fn get_forecast<'b, T>(&self, request: T) -> ApiResult<Response>
+    pub async fn get_forecast<'b, T>(&self, request: T) -> ApiResult<Response>
         where T : Borrow<ForecastRequest<'b>> + Sized {
         self.client.get(request.borrow().url.clone())
-            .header("Accept-Encoding", "gzip")
-            .send()
+            .send().await
     }
 
     /// Send a [Time Machine
@@ -152,11 +141,10 @@ impl<'a> ApiClient<'a> {
     /// This function is a thin wrapper around
     /// `reqwest::Client.get(..)`, so it will return an error under the
     /// same conditions in which reqwest would.
-    pub fn get_time_machine<'b, T>(&self, request: T) -> ApiResult<Response>
+    pub async fn get_time_machine<'b, T>(&self, request: T) -> ApiResult<Response>
         where T : Borrow<TimeMachineRequest<'b>> + Sized {
         self.client.get(request.borrow().url.clone())
-            .header("Accept-Encoding", "gzip")
-            .send()
+            .send().await
     }
 }
 

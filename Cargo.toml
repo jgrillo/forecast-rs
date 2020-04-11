@@ -8,13 +8,17 @@ repository = "https://github.com/jgrillo/forecast-rs"
 keywords = ["forecast", "weather", "darksky"]
 version = "2.0.0"
 authors = ["Jesse C. Grillo <jesse.grillo@gmail.com>"]
+edition = "2018"
 
 [features]
 integration = []
+
+[dev_dependencies]
+tokio = { version = "0.2", features = ["macros", "rt-threaded"] }
 
 [dependencies]
 serde = "1.0.*"
 serde_derive = "1.0.*"
 serde_json = "1.0.*"
-reqwest = "0.9.1"
+reqwest = "0.10.*"
 itertools = "0.7.*"
